@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>إنشاء حساب - مدرسة الشمامسة</title>
+
+    <!-- ================= FONTS ================= -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- ================= ICONS ================= -->
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- ================= FIREBASE ================= -->
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
+
+    <style>
+
+        /* =====================================================
+           ROOT
+        ===================================================== */
+
+        :root {
+
+            --navy: #172554;
+            --navy-light: #28418f;
+
+            --maroon: #741b24;
+            --maroon-light: #9b3039;
+
+            --gold: #c79a32;
+            --gold-light: #f2d889;
+
+            --green: #16a34a;
+            --red: #dc2626;
+            --orange: #d97706;
+
+            --bg: #f5f7fb;
+            --white: #ffffff;
+
+            --text: #182033;
+            --muted: #858c9b;
+
+            --border: #e9edf3;
+
+            --shadow: 0 15px 45px rgba(23, 37, 84, .08);
+
+        }
+
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 90% 0%, rgba(199, 154, 50, .08), transparent 28%),
+                radial-gradient(circle at 0% 35%, rgba(23, 37, 84, .055), transparent 30%),
+                var(--bg);
+            color: var(--text);
+            font-family: "Tajawal", sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 0;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        button { font-family: inherit; border: none; cursor: pointer; }
+        input { font-family: inherit; }
+
+        /* =====================================================
+           PAGE
+        ===================================================== */
+
+        .page {
+            width: min(460px, calc(100% - 22px));
+            margin: auto;
+        }
+
+        /* =====================================================
+           HERO HEADER (نفس روح main-hero بالصفحة الرئيسية)
+        ===================================================== */
+
+        .auth-hero {
+            position: relative;
+            overflow: hidden;
+            padding: 30px 26px;
+            border-radius: 34px;
+            color: white;
+            text-align: center;
+            background:
+                radial-gradient(circle at 8% 10%, rgba(255, 255, 255, .15), transparent 25%),
+                radial-gradient(circle at 95% 95%, rgba(199, 154, 50, .25), transparent 32%),
+                linear-gradient(135deg, #121d45, #263d87 52%, #641c25);
+            box-shadow: 0 22px 55px rgba(23, 37, 84, .19);
+            animation: heroIn .65s ease both;
+            margin-bottom: 16px;
+        }
+
+        .auth-hero::before {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, .08);
+            left: -150px;
+            bottom: -150px;
+        }
+
+        .auth-hero::after {
+            content: "";
+            position: absolute;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, .06);
+            right: -180px;
+            top: -190px;
+        }
+
+        .auth-icon {
+            position: relative;
+            z-index: 2;
+            width: 66px;
+            height: 66px;
+            margin: 0 auto 14px;
+            border-radius: 22px;
+            display: grid;
+            place-items: center;
+            font-size: 26px;
+            background: rgba(255, 255, 255, .12);
+            border: 2px solid rgba(255, 255, 255, .5);
+        }
+
+        .auth-hero h1 {
+            position: relative;
+            z-index: 2;
+            font-family: "Amiri", serif;
+            font-size: 26px;
+            margin-bottom: 6px;
+        }
+
+        .auth-hero p {
+            position: relative;
+            z-index: 2;
+            font-size: 12px;
+            opacity: .75;
+        }
+
+        /* =====================================================
+           FORM CARD
+        ===================================================== */
+
+        .auth-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 29px;
+            padding: 24px 22px;
+            box-shadow: var(--shadow);
+            animation: heroIn .65s ease .05s both;
+        }
+
+        .field {
+            margin-bottom: 18px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+
+        .input-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrap input {
+            width: 100%;
+            height: 50px;
+            padding: 0 44px 0 16px;
+            border-radius: 15px;
+            border: 1.5px solid var(--border);
+            background: #f8f9fc;
+            font-size: 14px;
+            color: var(--text);
+            outline: none;
+            transition: .2s;
+        }
+
+        .input-wrap input:focus {
+            border-color: var(--navy-light);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(40, 65, 143, .1);
+        }
+
+        .input-wrap .field-icon {
+            position: absolute;
+            right: 14px;
+            color: var(--muted);
+            font-size: 14px;
+            pointer-events: none;
+        }
+
+        .toggle-eye {
+            position: absolute;
+            left: 14px;
+            background: none;
+            color: var(--muted);
+            font-size: 15px;
+            display: grid;
+            place-items: center;
+            width: 24px;
+            height: 24px;
+        }
+
+        .toggle-eye:active { transform: scale(.9); }
+
+        .field-error {
+            display: none;
+            margin-top: 7px;
+            font-size: 11px;
+            color: var(--red);
+            font-weight: 700;
+        }
+
+        .field-error.show { display: block; }
+
+        /* =====================================================
+           STRENGTH METER (مطابق للصورة)
+        ===================================================== */
+
+        .strength-wrap {
+            margin-top: 10px;
+        }
+
+        .strength-label {
+            font-size: 11px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .strength-bars {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .strength-bars span {
+            flex: 1;
+            height: 5px;
+            border-radius: 4px;
+            background: #edf0f4;
+            transition: .25s;
+        }
+
+        .strength-checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11.5px;
+            color: var(--muted);
+            transition: .2s;
+        }
+
+        .check-item i {
+            font-size: 13px;
+            color: #cbd2dd;
+            transition: .2s;
+        }
+
+        .check-item.valid {
+            color: var(--text);
+        }
+
+        .check-item.valid i {
+            color: var(--green);
+        }
+
+        /* =====================================================
+           BUTTON
+        ===================================================== */
+
+        .btn-main {
+            width: 100%;
+            height: 54px;
+            border-radius: 17px;
+            background: linear-gradient(135deg, var(--maroon), var(--maroon-light));
+            color: white;
+            font-size: 15px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 14px 30px rgba(116, 27, 36, .25);
+            transition: .2s;
+            margin-top: 6px;
+        }
+
+        .btn-main:active { transform: scale(.98); }
+
+        .btn-main:disabled {
+            opacity: .55;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        .btn-main .spinner {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2.5px solid rgba(255, 255, 255, .4);
+            border-top-color: white;
+            animation: spin .7s linear infinite;
+            display: none;
+        }
+
+        .btn-main.loading .spinner { display: inline-block; }
+        .btn-main.loading .btn-text { opacity: .85; }
+
+        .switch-link {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .switch-link a {
+            color: var(--navy);
+            font-weight: 800;
+        }
+
+        /* =====================================================
+           TOAST
+        ===================================================== */
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: var(--navy);
+            color: white;
+            padding: 13px 20px;
+            border-radius: 14px;
+            font-size: 12.5px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 15px 35px rgba(23, 37, 84, .3);
+            opacity: 0;
+            pointer-events: none;
+            transition: .3s;
+            z-index: 999;
+            max-width: 90%;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.error { background: var(--maroon); }
+        .toast.success { background: var(--green); }
+
+        /* =====================================================
+           ANIMATIONS
+        ===================================================== */
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @keyframes heroIn {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 480px) {
+            .auth-hero { padding: 26px 20px; border-radius: 28px; }
+            .auth-card { padding: 20px 16px; border-radius: 25px; }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="page">
+
+        <!-- =================================================
+             HERO
+        ================================================== -->
+
+        <section class="auth-hero">
+
+            <div class="auth-icon">
+                <i class="fa-solid fa-user-plus"></i>
+            </div>
+
+            <h1>إنشاء حساب جديد</h1>
+            <p>مدرسة الشمامسة - كنيسة الشهيد العظيم استيفانوس ومارمينا العجايبي</p>
+
+        </section>
+
+        <!-- =================================================
+             FORM
+        ================================================== -->
+
+        <section class="auth-card">
+
+            <form id="signupForm" onsubmit="return false;">
+
+                <!-- USERNAME -->
+
+                <div class="field">
+                    <label for="username">اسم المستخدم</label>
+
+                    <div class="input-wrap">
+                        <input type="text" id="username" placeholder="اكتب اسم المستخدم" autocomplete="off">
+                        <i class="fa-solid fa-user field-icon"></i>
+                    </div>
+
+                    <div class="field-error" id="usernameError">هذا الحقل مطلوب</div>
+                </div>
+
+                <!-- PASSWORD -->
+
+                <div class="field">
+                    <label for="password">كلمة المرور الجديدة</label>
+
+                    <div class="input-wrap">
+                        <input type="password" id="password" placeholder="اكتب كلمة المرور" autocomplete="new-password">
+                        <button type="button" class="toggle-eye" data-target="password">
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+
+                    <div class="strength-wrap">
+
+                        <div class="strength-label" id="strengthLabel">ضعيفة</div>
+
+                        <div class="strength-bars">
+                            <span id="bar1"></span>
+                            <span id="bar2"></span>
+                            <span id="bar3"></span>
+                            <span id="bar4"></span>
+                        </div>
+
+                        <div class="strength-checklist">
+
+                            <div class="check-item" id="check-len">
+                                <span>٨ أحرف على الأقل</span>
+                                <i class="fa-solid fa-circle-xmark"></i>
+                            </div>
+
+                            <div class="check-item" id="check-upper">
+                                <span>حرف كبير واحد على الأقل</span>
+                                <i class="fa-solid fa-circle-xmark"></i>
+                            </div>
+
+                            <div class="check-item" id="check-num">
+                                <span>رقم واحد على الأقل</span>
+                                <i class="fa-solid fa-circle-xmark"></i>
+                            </div>
+
+                            <div class="check-item" id="check-special">
+                                <span>رمز خاص (!@#$%...)</span>
+                                <i class="fa-solid fa-circle-xmark"></i>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- SUBMIT -->
+
+                <button type="button" class="btn-main" id="submitBtn">
+                    <span class="spinner"></span>
+                    <span class="btn-text">تفعيل الحساب</span>
+                </button>
+
+                <div class="switch-link">
+                    لديك حساب مفعل بالفعل؟ <a href="login.html">تسجيل الدخول</a>
+                </div>
+
+            </form>
+
+        </section>
+
+    </div>
+
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
+
+    <div class="toast" id="toast">
+        <i class="fa-solid fa-circle-info"></i>
+        <span id="toastText"></span>
+    </div>
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script>
+
+        /* =================================================
+           FIREBASE
+        ================================================= */
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDk8JXHvo9up6Hof7d6S_Or8ICnaGnuIUg",
+            authDomain: "tony-c78c0.firebaseapp.com",
+            projectId: "tony-c78c0",
+            storageBucket: "tony-c78c0.firebasestorage.app",
+            messagingSenderId: "182062544524",
+            appId: "1:182062544524:web:59afdba4f0d1dfd929ada9",
+            measurementId: "G-4FER9HW0JS"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        const db = firebase.firestore();
+
+        // اسم الكولكشين اللي هيتم تخزين المستخدمين الجدد فيها
+        const USERS_COLLECTION = "users";
+
+
+        /* =================================================
+           ELEMENTS
+        ================================================= */
+
+        const usernameInput = document.getElementById("username");
+        const passwordInput = document.getElementById("password");
+
+        const usernameError = document.getElementById("usernameError");
+
+        const submitBtn = document.getElementById("submitBtn");
+
+        const toast = document.getElementById("toast");
+        const toastText = document.getElementById("toastText");
+
+
+        /* =================================================
+           TOAST HELPER
+        ================================================= */
+
+        let toastTimer = null;
+
+        function showToast(message, type = "info") {
+
+            clearTimeout(toastTimer);
+
+            toast.className = "toast show " + type;
+            toastText.textContent = message;
+
+            toastTimer = setTimeout(() => {
+                toast.classList.remove("show");
+            }, 3200);
+
+        }
+
+
+        /* =================================================
+           SHOW / HIDE PASSWORD
+        ================================================= */
+
+        document.querySelectorAll(".toggle-eye").forEach(btn => {
+
+            btn.addEventListener("click", () => {
+
+                const targetId = btn.getAttribute("data-target");
+                const input = document.getElementById(targetId);
+                const icon = btn.querySelector("i");
+
+                if (input.type === "password") {
+                    input.type = "text";
+                    icon.className = "fa-regular fa-eye-slash";
+                } else {
+                    input.type = "password";
+                    icon.className = "fa-regular fa-eye";
+                }
+
+            });
+
+        });
+
+
+        /* =================================================
+           PASSWORD STRENGTH
+        ================================================= */
+
+        const bars = [
+            document.getElementById("bar1"),
+            document.getElementById("bar2"),
+            document.getElementById("bar3"),
+            document.getElementById("bar4")
+        ];
+
+        const strengthLabel = document.getElementById("strengthLabel");
+
+        const checks = {
+            len: document.getElementById("check-len"),
+            upper: document.getElementById("check-upper"),
+            num: document.getElementById("check-num"),
+            special: document.getElementById("check-special")
+        };
+
+        function setCheck(el, valid) {
+
+            const icon = el.querySelector("i");
+
+            if (valid) {
+                el.classList.add("valid");
+                icon.className = "fa-solid fa-circle-check";
+            } else {
+                el.classList.remove("valid");
+                icon.className = "fa-solid fa-circle-xmark";
+            }
+
+        }
+
+        function evaluatePassword(value) {
+
+            const rules = {
+                len: value.length >= 8,
+                upper: /[A-Z]/.test(value),
+                num: /[0-9]/.test(value),
+                special: /[!@#$%^&*()_\-+=\[\]{};':"\\|,.<>\/?~`]/.test(value)
+            };
+
+            setCheck(checks.len, rules.len);
+            setCheck(checks.upper, rules.upper);
+            setCheck(checks.num, rules.num);
+            setCheck(checks.special, rules.special);
+
+            const score = Object.values(rules).filter(Boolean).length;
+
+            bars.forEach((bar, index) => {
+
+                if (index < score) {
+
+                    if (score <= 1) bar.style.background = "var(--red)";
+                    else if (score === 2) bar.style.background = "var(--orange)";
+                    else if (score === 3) bar.style.background = "var(--gold)";
+                    else bar.style.background = "var(--green)";
+
+                } else {
+                    bar.style.background = "#edf0f4";
+                }
+
+            });
+
+            if (score <= 1) strengthLabel.textContent = "ضعيفة";
+            else if (score === 2) strengthLabel.textContent = "متوسطة";
+            else if (score === 3) strengthLabel.textContent = "جيدة";
+            else strengthLabel.textContent = "قوية";
+
+            strengthLabel.style.color =
+                score <= 1 ? "var(--red)" :
+                score === 2 ? "var(--orange)" :
+                score === 3 ? "var(--gold)" : "var(--green)";
+
+            return { rules, score, allValid: score === 4 };
+
+        }
+
+        passwordInput.addEventListener("input", () => {
+            evaluatePassword(passwordInput.value);
+        });
+
+        // تهيئة الحالة الابتدائية
+        evaluatePassword("");
+
+
+        /* =================================================
+           FIELD ERROR HELPERS
+        ================================================= */
+
+        function setInputError(input, errorEl, hasError) {
+
+            if (hasError) {
+                input.style.borderColor = "var(--red)";
+                errorEl.classList.add("show");
+            } else {
+                input.style.borderColor = "var(--border)";
+                errorEl.classList.remove("show");
+            }
+
+        }
+
+
+        /* =================================================
+           SUBMIT
+        ================================================= */
+
+        submitBtn.addEventListener("click", async () => {
+
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value;
+
+            let hasError = false;
+
+            // اسم المستخدم
+            if (!username) {
+                setInputError(usernameInput, usernameError, true);
+                hasError = true;
+            } else {
+                setInputError(usernameInput, usernameError, false);
+            }
+
+            // قوة كلمة المرور
+            const { allValid } = evaluatePassword(password);
+
+            if (!allValid) {
+                showToast("كلمة المرور لا تحقق كل الشروط المطلوبة", "error");
+                hasError = true;
+            }
+
+            if (hasError) return;
+
+            // تفعيل حالة التحميل
+            submitBtn.disabled = true;
+            submitBtn.classList.add("loading");
+
+            const usernameKey = username.toLowerCase();
+
+            try {
+
+                const userRef = db.collection(USERS_COLLECTION).doc(usernameKey);
+                const existing = await userRef.get();
+
+                if (existing.exists) {
+                    showToast("اسم المستخدم موجود بالفعل، برجاء اختيار اسم آخر", "error");
+                    setInputError(usernameInput, usernameError, true);
+                    usernameError.textContent = "اسم المستخدم مستخدم من قبل";
+                    return;
+                }
+
+                await userRef.set({
+                    username: usernameKey,
+                    displayUsername: username,
+                    password: password,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    isActive: true
+                });
+
+                // حفظ المستخدم الحالي محلياً لاستخدامه في باقي الصفحات
+                localStorage.setItem("currentUser", usernameKey);
+                localStorage.setItem("current_servant_username", usernameKey);
+
+                showToast("تم تفعيل الحساب بنجاح", "success");
+
+                setTimeout(() => {
+                    window.location.href = "sign_comp.html";
+                }, 900);
+
+            } catch (error) {
+
+                console.error("SIGNUP ERROR:", error);
+                showToast("حدث خطأ أثناء إنشاء الحساب، حاول مرة أخرى", "error");
+
+            } finally {
+
+                submitBtn.disabled = false;
+                submitBtn.classList.remove("loading");
+
+            }
+
+        });
+
+
+        /* =================================================
+           LIVE VALIDATION
+        ================================================= */
+
+        usernameInput.addEventListener("input", () => {
+            setInputError(usernameInput, usernameError, false);
+            usernameError.textContent = "هذا الحقل مطلوب";
+        });
+
+    </script>
+
+</body>
+
+</html>

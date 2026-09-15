@@ -1,0 +1,3335 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <title>البروفايل | مدرسة الشمامسة</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,700&family=Tajawal:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
+
+    <style>
+
+        /* =====================================================
+           ROOT (نفس متغيرات الهوم)
+        ===================================================== */
+
+        :root {
+
+            --navy: #172554;
+            --navy2: #28418f;
+
+            --maroon: #741b24;
+            --maroon2: #9b3039;
+
+            --gold: #c79a32;
+            --gold-light: #f2d889;
+
+            --green: #16a34a;
+            --green-bg: #ecfdf3;
+
+            --red: #dc2626;
+            --red-bg: #fff1f2;
+
+            --blue: #2563eb;
+            --blue-bg: #eff6ff;
+
+            --bg: #f5f7fb;
+            --text: #182033;
+            --muted: #858c9b;
+            --border: #e9edf3;
+
+            --shadow: 0 15px 45px rgba(23, 37, 84, .08);
+
+        }
+
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+
+        body {
+            min-height: 100vh;
+            padding: 12px 12px 120px;
+            overflow-x: hidden;
+            font-family: "Tajawal", sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 90% 0%, rgba(199, 154, 50, .08), transparent 28%),
+                radial-gradient(circle at 0% 35%, rgba(23, 37, 84, .055), transparent 30%),
+                var(--bg);
+        }
+
+
+        button, input, select { font-family: inherit; }
+        button { border: 0; cursor: pointer; }
+        a { color: inherit; text-decoration: none; }
+
+        .page { width: min(1000px, 100%); margin: auto; }
+
+        /* =====================================================
+           TOPBAR (مطابق للهوم)
+        ===================================================== */
+
+        .topbar {
+            margin-top: 12px;
+            min-height: 70px;
+            padding: 9px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            background: rgba(255, 255, 255, .95);
+            border: 1px solid rgba(23, 37, 84, .07);
+            border-radius: 25px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 10px 35px rgba(23, 37, 84, .07);
+        }
+
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+
+        .brand-icon {
+            width: 48px;
+            height: 48px;
+            flex: 0 0 48px;
+            display: grid;
+            place-items: center;
+            border-radius: 17px;
+            color: white;
+            background: linear-gradient(145deg, var(--navy), var(--navy2));
+            font-size: 20px;
+            box-shadow: 0 9px 22px rgba(23, 37, 84, .2);
+        }
+
+
+        .brand-text h1 {
+            color: var(--navy);
+            font-family: "Amiri", serif;
+            font-size: 20px;
+        }
+
+
+        .brand-text p {
+            margin-top: 3px;
+            color: var(--muted);
+            font-size: 10.5px;
+        }
+
+
+        .top-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+
+        .top-btn {
+            width: 43px;
+            height: 43px;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            display: grid;
+            place-items: center;
+            color: var(--navy);
+            background: white;
+            font-size: 17px;
+            transition: .2s;
+        }
+
+        .top-btn:active { transform: scale(.93); }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+            margin-top: 14px;
+            position: relative;
+            overflow: hidden;
+            padding: 30px 26px;
+            color: white;
+            border-radius: 34px;
+            background:
+                radial-gradient(circle at 7% 5%, rgba(255, 255, 255, .15), transparent 27%),
+                radial-gradient(circle at 95% 95%, rgba(199, 154, 50, .25), transparent 30%),
+                linear-gradient(135deg, #121d45, #263d87 53%, #641c25);
+            box-shadow: 0 22px 55px rgba(23, 37, 84, .19);
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 260px; height: 260px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, .08);
+            left: -150px; bottom: -150px;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 320px; height: 320px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, .06);
+            right: -180px; top: -190px;
+        }
+
+
+        .hero-row {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+
+        .hero-photo {
+            width: 110px;
+            height: 110px;
+            flex: 0 0 110px;
+            object-fit: cover;
+            border-radius: 30px;
+            border: 3px solid rgba(255, 255, 255, .55);
+            background: rgba(255, 255, 255, .12);
+            box-shadow: 0 14px 34px rgba(0, 0, 0, .18);
+        }
+
+
+        .hero-info { min-width: 0; flex: 1; }
+
+        .hero-small { color: rgba(255, 255, 255, .65); font-size: 11px; }
+
+        .hero-name {
+            margin-top: 4px;
+            font-family: "Amiri", serif;
+            font-size: 32px;
+            line-height: 1.25;
+            word-break: break-word;
+        }
+
+        .hero-username { margin-top: 5px; color: rgba(255, 255, 255, .65); font-size: 11px; }
+
+        .badges { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 13px; }
+
+        .badge {
+            padding: 7px 10px;
+            border-radius: 10px;
+            color: white;
+            background: rgba(255, 255, 255, .12);
+            border: 1px solid rgba(255, 255, 255, .12);
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .hero-points {
+            min-width: 140px;
+            padding: 16px;
+            text-align: center;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, .1);
+            border: 1px solid rgba(255, 255, 255, .14);
+        }
+
+        .hero-points strong { display: block; color: var(--gold-light); font-size: 36px; }
+        .hero-points span { color: rgba(255, 255, 255, .65); font-size: 10px; }
+
+
+        /* =====================================================
+           SECTION TITLE (مطابق للهوم section-head)
+        ===================================================== */
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin: 24px 4px 12px;
+        }
+
+        .section-title h2 {
+            color: var(--navy);
+            font-family: "Amiri", serif;
+            font-size: 21px;
+        }
+
+        .section-title span { color: var(--muted); font-size: 10.5px; }
+
+
+        /* =====================================================
+           INFO GRID
+        ===================================================== */
+
+        .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+        .info-card {
+            padding: 17px;
+            min-height: 100px;
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            background: white;
+            box-shadow: var(--shadow);
+        }
+
+        .info-icon {
+            width: 40px; height: 40px;
+            display: grid; place-items: center;
+            margin-bottom: 9px;
+            border-radius: 13px;
+            color: var(--navy);
+            background: #eef2ff;
+        }
+
+        .info-label { color: var(--muted); font-size: 10.5px; }
+
+        .info-value {
+            margin-top: 4px;
+            color: var(--navy);
+            font-size: 15px;
+            font-weight: 900;
+            word-break: break-word;
+        }
+
+
+        /* =====================================================
+           ADMIN CARD
+        ===================================================== */
+
+        .admin-card {
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            background: white;
+            box-shadow: var(--shadow);
+        }
+
+        .admin-title { display: flex; align-items: center; gap: 11px; margin-bottom: 16px; }
+
+        .admin-title-icon {
+            width: 44px; height: 44px;
+            display: grid; place-items: center;
+            border-radius: 14px;
+            color: var(--navy);
+            background: #eef2ff;
+        }
+
+        .admin-title h3 { color: var(--navy); font-size: 16px; }
+        .admin-title p { margin-top: 3px; color: var(--muted); font-size: 9.5px; }
+
+        .point-buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+
+        .point-btn {
+            min-height: 48px;
+            border-radius: 14px;
+            color: var(--navy);
+            background: #f5f7fa;
+            font-weight: 900;
+            transition: .2s;
+        }
+
+        .point-btn.plus:hover { color: white; background: var(--green); }
+        .point-btn.minus:hover { color: white; background: var(--red); }
+
+        .custom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 9px; }
+
+        .custom-grid input {
+            grid-column: 1 / -1;
+            width: 100%;
+            min-height: 48px;
+            padding: 0 12px;
+            text-align: center;
+            outline: none;
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
+            background: #f8f9fc;
+        }
+
+        .custom-grid input:focus {
+            border-color: var(--navy2);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(40, 65, 143, .1);
+        }
+
+        .custom-add, .custom-remove { min-height: 46px; border-radius: 13px; font-size: 11px; font-weight: 900; }
+        .custom-add { color: var(--green); background: var(--green-bg); }
+        .custom-remove { color: var(--red); background: var(--red-bg); }
+
+
+        /* =====================================================
+           EDIT GRID
+        ===================================================== */
+
+        .edit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+        .edit-field { display: grid; gap: 6px; }
+        .edit-field.full { grid-column: 1 / -1; }
+
+        .edit-field label { color: var(--navy); font-size: 11px; font-weight: 700; }
+
+        .edit-field input, .edit-field select {
+            width: 100%;
+            min-height: 48px;
+            padding: 0 14px;
+            outline: none;
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
+            background: #f8f9fc;
+            color: var(--text);
+            transition: .2s;
+        }
+
+        .edit-field input:focus, .edit-field select:focus {
+            border-color: var(--navy2);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(40, 65, 143, .1);
+        }
+
+        .save-btn {
+            width: 100%;
+            min-height: 52px;
+            margin-top: 16px;
+            border-radius: 16px;
+            color: white;
+            background: linear-gradient(135deg, var(--maroon), var(--maroon2));
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            box-shadow: 0 14px 30px rgba(116, 27, 36, .25);
+            transition: .2s;
+        }
+
+        .save-btn:active { transform: scale(.98); }
+
+
+        /* =====================================================
+           BAN CARD
+        ===================================================== */
+
+        .ban-card {
+            padding: 18px;
+            border-radius: 22px;
+            border: 1px solid #fecdd3;
+            background: #fff7f8;
+        }
+
+        .ban-card.banned { border-color: #b7dec0; background: #f1faf4; }
+
+        .ban-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+
+        .ban-row h3 { color: var(--navy); font-size: 15px; }
+        .ban-row p { margin-top: 4px; color: var(--muted); font-size: 9.5px; }
+
+        .ban-button {
+            min-height: 45px;
+            padding: 0 16px;
+            border-radius: 13px;
+            color: white;
+            background: var(--red);
+            font-weight: 900;
+        }
+
+        .ban-button.unban { background: var(--green); }
+
+
+        /* =====================================================
+           ERROR BOX
+        ===================================================== */
+
+        .error-box {
+            margin-top: 18px;
+            padding: 60px 20px;
+            border: 1.5px dashed var(--border);
+            border-radius: 24px;
+            background: white;
+            text-align: center;
+        }
+
+        .error-box i { color: var(--red); font-size: 38px; }
+        .error-box h2 { margin-top: 12px; color: var(--navy); font-family: "Amiri", serif; font-size: 20px; }
+        .error-box p { margin-top: 6px; color: var(--muted); font-size: 11px; }
+
+
+        /* =====================================================
+           TOAST
+        ===================================================== */
+
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: 100px;
+            z-index: 5000;
+            width: min(470px, calc(100% - 30px));
+            padding: 14px 18px;
+            border-radius: 16px;
+            background: var(--navy);
+            color: white;
+            box-shadow: 0 15px 35px rgba(23, 37, 84, .3);
+            opacity: 0;
+            pointer-events: none;
+            transform: translate(-50%, 20px);
+            transition: .25s;
+            font-size: 12.5px;
+            font-weight: 700;
+        }
+
+        .toast.show { opacity: 1; transform: translate(-50%, 0); }
+        .toast.error { background: var(--maroon); }
+
+
+        /* =====================================================
+           BOTTOM NAV (مطابق للهوم)
+        ===================================================== */
+
+        .bottom-nav {
+            position: fixed;
+            z-index: 100;
+            bottom: 11px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(620px, calc(100% - 22px));
+            height: 72px;
+            padding: 6px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            background: rgba(255, 255, 255, .97);
+            border: 1px solid rgba(23, 37, 84, .08);
+            border-radius: 26px;
+            backdrop-filter: blur(18px);
+            box-shadow: 0 17px 45px rgba(23, 37, 84, .15);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            border-radius: 17px;
+            color: #9ca4b2;
+            font-size: 9px;
+            font-weight: 800;
+            transition: .2s;
+        }
+
+        .nav-item i { font-size: 17px; }
+
+        .nav-item.active { color: var(--navy); background: #eef2ff; }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 700px) {
+
+            body { padding: 8px 8px 115px; }
+
+            .topbar { min-height: 64px; padding: 8px 10px; border-radius: 21px; }
+
+            .brand-icon { width: 42px; height: 42px; flex-basis: 42px; border-radius: 14px; }
+
+            .brand-text h1 { font-size: 17px; }
+            .brand-text p { font-size: 9px; }
+
+            .top-btn { width: 40px; height: 40px; border-radius: 13px; }
+
+            .hero { padding: 24px 18px; border-radius: 28px; }
+
+            .hero-row { align-items: flex-start; flex-wrap: wrap; }
+
+            .hero-photo { width: 84px; height: 84px; flex-basis: 84px; border-radius: 24px; }
+
+            .hero-name { font-size: 26px; }
+
+            .hero-points { width: 100%; }
+
+            .info-grid { grid-template-columns: 1fr; }
+            .edit-grid { grid-template-columns: 1fr; }
+            .edit-field.full { grid-column: auto; }
+
+            .point-buttons { grid-template-columns: repeat(2, 1fr); }
+
+            .ban-row { align-items: stretch; flex-direction: column; }
+            .ban-button { width: 100%; }
+
+            .bottom-nav { height: 64px; border-radius: 22px; }
+            .nav-item { font-size: 8px; }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+
+        <div class="brand">
+
+            <div class="brand-icon">
+
+                <i class="fa-solid fa-user"></i>
+
+            </div>
+
+
+            <div class="brand-text">
+
+                <h1>
+                    البروفايل
+                </h1>
+
+                <p>
+                    مدرسة الشمامسة
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="top-actions">
+
+
+            <button
+                id="backBtn"
+                class="top-btn"
+                title="رجوع"
+            >
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+
+            <button
+                id="refreshBtn"
+                class="top-btn"
+                title="تحديث"
+            >
+
+                <i class="fa-solid fa-rotate"></i>
+
+            </button>
+
+
+        </div>
+
+    </header>
+
+
+    <main id="content">
+
+        <div class="error-box">
+
+            <i class="fa-solid fa-spinner fa-spin"></i>
+
+            <h2>
+                جاري تحميل البيانات...
+            </h2>
+
+            <p>
+                من فضلك انتظر
+            </p>
+
+        </div>
+
+    </main>
+
+
+</div>
+
+
+<div
+    id="toast"
+    class="toast">
+
+    <span id="toastText">
+        -
+    </span>
+
+</div>
+
+
+<!-- BOTTOM NAV -->
+
+<nav class="bottom-nav">
+
+
+    <a
+        href="profile.html"
+        class="nav-item active">
+
+        <i class="fa-solid fa-user"></i>
+
+        البروفايل
+
+    </a>
+
+
+    <a
+        href="gallery.html"
+        class="nav-item">
+
+        <i class="fa-solid fa-images"></i>
+
+        المعرض
+
+    </a>
+
+
+    <a
+        href="home.html"
+        class="nav-item">
+
+        <i class="fa-solid fa-house-chimney"></i>
+
+        الرئيسية
+
+    </a>
+
+
+    <a
+        href="cart.html"
+        class="nav-item">
+
+        <i class="fa-solid fa-heart"></i>
+
+        الطلبات
+
+    </a>
+
+
+    <a
+        href="notifications.html"
+        class="nav-item">
+
+        <i class="fa-solid fa-bell"></i>
+
+        الإشعارات
+
+    </a>
+
+
+</nav>
+
+
+<script>
+
+    /* =====================================================
+       FIREBASE
+    ===================================================== */
+
+
+    const firebaseConfig = {
+
+        apiKey:
+            "AIzaSyDk8HJVho9up9upH6of7d6S_Or8ICnaGnuIUg",
+
+        authDomain:
+            "tony-c78c0.firebaseapp.com",
+
+        projectId:
+            "tony-c78c0",
+
+        storageBucket:
+            "tony-c78c0.firebasestorage.app",
+
+        messagingSenderId:
+            "182062544524",
+
+        appId:
+            "1:182062544524:web:59afd9d0f1dfd929ada9",
+
+        measurementId:
+            "G-4FER9HW0JS"
+
+    };
+
+
+    if (!firebase.apps.length) {
+
+        firebase.initializeApp(
+            firebaseConfig
+        );
+
+    }
+
+
+    const db =
+        firebase.firestore();
+
+
+    /* =====================================================
+       URL MODE
+    ===================================================== */
+
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const requestedUserId =
+        params.get("id");
+
+
+    let profileUser = null;
+
+    let currentViewer = null;
+
+    let viewerIsServant = false;
+
+    let toastTimer = null;
+
+
+    /* =====================================================
+       HELPERS
+    ===================================================== */
+
+
+    function clean(value) {
+
+        return String(
+            value ?? ""
+        )
+            .trim()
+            .replace(
+                /\s+/g,
+                " "
+            );
+
+    }
+
+
+    function normalize(value) {
+
+        return clean(
+            value
+        )
+            .toLocaleLowerCase(
+                "ar-EG"
+            );
+
+    }
+
+
+    function escapeHtml(value) {
+
+        return String(
+            value ?? ""
+        )
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+            .replace(
+                /</g,
+                "&lt;"
+            )
+            .replace(
+                />/g,
+                "&gt;"
+            )
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+    }
+
+
+    function getCurrentUsername() {
+
+        const keys = [
+
+            "currentUser",
+
+            "currentUsername",
+
+            "current_servant_username",
+
+            "servantUsername",
+
+            "username"
+
+        ];
+
+
+        for (
+            const key of keys
+        ) {
+
+            const value =
+                localStorage.getItem(
+                    key
+                );
+
+
+            if (
+                value &&
+                value.trim()
+            ) {
+
+                return value.trim();
+
+            }
+
+        }
+
+
+        return "";
+
+    }
+
+
+    function getName(user) {
+
+        return clean(
+
+            user.fullName ||
+
+            user.name ||
+
+            user.displayName ||
+
+            user.displayUsername ||
+
+            user.username ||
+
+            user.userName ||
+
+            "بدون اسم"
+
+        );
+
+    }
+
+
+    function getUsername(user) {
+
+        return clean(
+
+            user.username ||
+
+            user.displayUsername ||
+
+            user.userName ||
+
+            ""
+
+        );
+
+    }
+
+
+    function getStage(user) {
+
+        return clean(
+
+            user.stage ||
+
+            user.stageName ||
+
+            user.level ||
+
+            "غير محددة"
+
+        );
+
+    }
+
+
+    function getGrade(user) {
+
+        return clean(
+
+            user.grade ||
+
+            user.servantGrade ||
+
+            user.class ||
+
+            "غير محدد"
+
+        );
+
+    }
+
+
+    function getPoints(user) {
+
+        const n =
+            Number(
+                user.points ?? 0
+            );
+
+
+        return Number.isFinite(n)
+
+            ? Math.max(
+                0,
+                Math.trunc(n)
+            )
+
+            : 0;
+
+    }
+
+
+    function isBanned(user) {
+
+        return (
+
+            user.banned === true ||
+
+            user.isBanned === true ||
+
+            user.isBlocked === true
+
+        );
+
+    }
+
+
+    function getPhone(user) {
+
+        return clean(
+
+            user.phone ||
+
+            user.mobile ||
+
+            user.userPhone ||
+
+            user.phoneNumber ||
+
+            ""
+
+        );
+
+    }
+
+
+    function getFatherPhone(user) {
+
+        return clean(
+
+            user.fatherPhone ||
+
+            user.father_phone ||
+
+            ""
+
+        );
+
+    }
+
+
+    function getMotherPhone(user) {
+
+        return clean(
+
+            user.motherPhone ||
+
+            user.mother_phone ||
+
+            ""
+
+        );
+
+    }
+
+
+    function getAddress(user) {
+
+        return clean(
+            user.address || ""
+        );
+
+    }
+
+
+    function getBirthDate(user) {
+
+        return clean(
+
+            user.birthDate ||
+
+            user.birthdate ||
+
+            ""
+
+        );
+
+    }
+
+
+    function getPhoto(user) {
+
+        return (
+
+            user.photo ||
+
+            user.image ||
+
+            user.photoURL ||
+
+            user.imageUrl ||
+
+            user.imageURL ||
+
+            user.avatar ||
+
+            user.photoBase64 ||
+
+            "https://ui-avatars.com/api/?name=" +
+
+            encodeURIComponent(
+                getName(user)
+            ) +
+
+            "&background=172554&color=fff&size=300"
+
+        );
+
+    }
+
+
+    function showToast(
+        message,
+        type = "success"
+    ) {
+
+        const toast =
+            document.getElementById(
+                "toast"
+            );
+
+
+        document.getElementById(
+            "toastText"
+        ).textContent =
+            message;
+
+
+        toast.className =
+            "toast show";
+
+
+        if (
+            type === "error"
+        ) {
+
+            toast.classList.add(
+                "error"
+            );
+
+        }
+
+
+        clearTimeout(
+            toastTimer
+        );
+
+
+        toastTimer =
+            setTimeout(
+                () => {
+
+                    toast.classList.remove(
+                        "show"
+                    );
+
+                },
+                3500
+            );
+
+    }
+
+
+    /* =====================================================
+       LOAD VIEWER
+    ===================================================== */
+
+
+    async function loadViewer() {
+
+        const username =
+            getCurrentUsername();
+
+
+        viewerIsServant =
+            false;
+
+        currentViewer =
+            null;
+
+
+        if (!username) {
+
+            return;
+
+        }
+
+
+        const normalized =
+            normalize(
+                username
+            );
+
+
+        /* servants by ID */
+
+        try {
+
+            const snap =
+                await db
+                    .collection("servants")
+                    .doc(username)
+                    .get();
+
+
+            if (
+                snap.exists
+            ) {
+
+                currentViewer = {
+
+                    id:
+                        snap.id,
+
+                    ...snap.data()
+
+                };
+
+
+                viewerIsServant =
+                    true;
+
+                return;
+
+            }
+
+        }
+        catch(error) {
+
+            console.log(
+                error
+            );
+
+        }
+
+
+        /* servants by username */
+
+        try {
+
+            const snap =
+                await db
+                    .collection("servants")
+                    .get();
+
+
+            const found =
+                snap.docs.find(
+                    d =>
+
+                        normalize(
+                            d.data().username
+                        ) ===
+                        normalized
+                );
+
+
+            if (
+                found
+            ) {
+
+                currentViewer = {
+
+                    id:
+                        found.id,
+
+                    ...found.data()
+
+                };
+
+
+                viewerIsServant =
+                    true;
+
+                return;
+
+            }
+
+        }
+        catch(error) {
+
+            console.log(
+                error
+            );
+
+        }
+
+
+        /* users by ID */
+
+        try {
+
+            const snap =
+                await db
+                    .collection("users")
+                    .doc(username)
+                    .get();
+
+
+            if (
+                snap.exists
+            ) {
+
+                currentViewer = {
+
+                    id:
+                        snap.id,
+
+                    ...snap.data()
+
+                };
+
+                /*
+                    حساب users العادي
+                    لا يأخذ صلاحيات الإدارة
+                    لمجرد وجوده في users.
+                */
+
+                return;
+
+            }
+
+        }
+        catch(error) {
+
+            console.log(
+                error
+            );
+
+        }
+
+
+        /* users by username */
+
+        try {
+
+            const snap =
+                await db
+                    .collection("users")
+                    .get();
+
+
+            const found =
+                snap.docs.find(
+                    d =>
+
+                        normalize(
+                            d.data().username
+                        ) ===
+                        normalized
+
+                        ||
+
+                        normalize(
+                            d.data().displayUsername
+                        ) ===
+                        normalized
+                );
+
+
+            if (
+                found
+            ) {
+
+                currentViewer = {
+
+                    id:
+                        found.id,
+
+                    ...found.data()
+
+                };
+
+            }
+
+        }
+        catch(error) {
+
+            console.log(
+                error
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       LOAD PROFILE USER
+    ===================================================== */
+
+
+    async function loadProfileUser() {
+
+        let targetId =
+            requestedUserId;
+
+
+        /*
+            بدون ?id=
+            افتح حساب الخادم الحالي
+        */
+
+        if (!targetId) {
+
+            const username =
+                getCurrentUsername();
+
+
+            if (!username) {
+
+                throw new Error(
+                    "لا يوجد حساب حالي"
+                );
+
+            }
+
+
+            /* ID مباشر */
+
+            const direct =
+                await db
+                    .collection("users")
+                    .doc(username)
+                    .get();
+
+
+            if (
+                direct.exists
+            ) {
+
+                targetId =
+                    direct.id;
+
+            }
+            else {
+
+                /* username search */
+
+                const snap =
+                    await db
+                        .collection("users")
+                        .get();
+
+
+                const found =
+                    snap.docs.find(
+                        d =>
+
+                            normalize(
+                                d.data().username
+                            ) ===
+                            normalize(
+                                username
+                            )
+
+                            ||
+
+                            normalize(
+                                d.data().displayUsername
+                            ) ===
+                            normalize(
+                                username
+                            )
+                    );
+
+
+                if (!found) {
+
+                    throw new Error(
+                        "لم يتم العثور على بيانات الحساب"
+                    );
+
+                }
+
+
+                targetId =
+                    found.id;
+
+            }
+
+        }
+
+
+        const snap =
+            await db
+                .collection("users")
+                .doc(targetId)
+                .get();
+
+
+        if (!snap.exists) {
+
+            throw new Error(
+                "لم يتم العثور على بيانات هذا المستخدم"
+            );
+
+        }
+
+
+        profileUser = {
+
+            id:
+                snap.id,
+
+            ...snap.data()
+
+        };
+
+
+        renderProfile();
+
+    }
+
+
+    /* =====================================================
+       RENDER
+    ===================================================== */
+
+
+    function renderProfile() {
+
+        const banned =
+            isBanned(
+                profileUser
+            );
+
+
+        const isOwnProfile =
+            !requestedUserId;
+
+
+        const showAdmin =
+            viewerIsServant &&
+            !isOwnProfile;
+
+
+        document.getElementById(
+            "content"
+        ).innerHTML = `
+
+            <!-- HERO -->
+
+            <section class="hero">
+
+
+                <div class="hero-row">
+
+
+                    <img
+                        id="profilePhoto"
+                        class="hero-photo"
+                        src="${escapeHtml(
+                            getPhoto(profileUser)
+                        )}"
+                        alt=""
+                        onerror="
+                            this.src =
+                            'https://ui-avatars.com/api/?name=' +
+                            encodeURIComponent('${escapeHtml(getName(profileUser))}') +
+                            '&background=172554&color=fff&size=300';
+                        "
+                    >
+
+
+                    <div class="hero-info">
+
+
+                        <div class="hero-small">
+
+                            ${
+                                isOwnProfile
+                                    ? "حسابي"
+                                    : "بروفايل المخدوم"
+                            }
+
+                        </div>
+
+
+                        <div class="hero-name">
+
+                            ${escapeHtml(
+                                getName(profileUser)
+                            )}
+
+                        </div>
+
+
+                        <div class="hero-username">
+
+                            ${
+                                getUsername(profileUser)
+                                    ? "@" +
+                                      escapeHtml(
+                                          getUsername(profileUser)
+                                      )
+                                    : "لا يوجد اسم مستخدم"
+                            }
+
+                        </div>
+
+
+                        <div class="badges">
+
+
+                            <span class="badge">
+
+                                <i class="fa-solid fa-layer-group"></i>
+
+                                ${escapeHtml(
+                                    getStage(profileUser)
+                                )}
+
+                            </span>
+
+
+                            <span class="badge">
+
+                                <i class="fa-solid fa-graduation-cap"></i>
+
+                                ${escapeHtml(
+                                    getGrade(profileUser)
+                                )}
+
+                            </span>
+
+
+                            <span
+                                class="badge"
+                                style="${
+                                    banned
+                                        ? "color:#fecaca;background:rgba(220,38,38,.20);"
+                                        : ""
+                                }"
+                            >
+
+                                ${
+                                    banned
+                                        ? "🔒 محظور"
+                                        : "✓ نشط"
+                                }
+
+                            </span>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="hero-points">
+
+
+                        <strong id="heroPoints">
+
+                            ${getPoints(profileUser)}
+
+                        </strong>
+
+
+                        <span>
+                            نقطة حالية
+                        </span>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+            <!-- INFO -->
+
+            <div class="section-title">
+
+                <h2>
+                    البيانات الشخصية
+                </h2>
+
+                <span>
+                    ${isOwnProfile ? "حسابك" : "بيانات المخدوم"}
+                </span>
+
+            </div>
+
+
+            <section class="info-grid">
+
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+
+                        <i class="fa-solid fa-user"></i>
+
+                    </div>
+
+                    <div class="info-label">
+                        الاسم الكامل
+                    </div>
+
+                    <div class="info-value">
+
+                        ${escapeHtml(
+                            getName(profileUser)
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+
+                        <i class="fa-solid fa-at"></i>
+
+                    </div>
+
+                    <div class="info-label">
+                        اسم المستخدم
+                    </div>
+
+                    <div class="info-value">
+
+                        ${escapeHtml(
+                            getUsername(profileUser) ||
+                            "غير موجود"
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+
+                        <i class="fa-solid fa-layer-group"></i>
+
+                    </div>
+
+                    <div class="info-label">
+                        المرحلة
+                    </div>
+
+                    <div class="info-value">
+
+                        ${escapeHtml(
+                            getStage(profileUser)
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+
+                        <i class="fa-solid fa-graduation-cap"></i>
+
+                    </div>
+
+                    <div class="info-label">
+                        الصف
+                    </div>
+
+                    <div class="info-value">
+
+                        ${escapeHtml(
+                            getGrade(profileUser)
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+
+                        <i class="fa-solid fa-phone"></i>
+
+                    </div>
+
+                    <div class="info-label">
+                        رقم الهاتف
+                    </div>
+
+                    <div class="info-value">
+
+                        ${escapeHtml(
+                            getPhone(profileUser) ||
+                            "غير موجود"
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+
+                        <i class="fa-solid fa-cake-candles"></i>
+
+                    </div>
+
+                    <div class="info-label">
+                        تاريخ الميلاد
+                    </div>
+
+                    <div class="info-value">
+
+                        ${escapeHtml(
+                            getBirthDate(profileUser) ||
+                            "غير محدد"
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+
+                        <i class="fa-solid fa-phone-volume"></i>
+
+                    </div>
+
+                    <div class="info-label">
+                        هاتف الأب
+                    </div>
+
+                    <div class="info-value">
+
+                        ${escapeHtml(
+                            getFatherPhone(profileUser) ||
+                            "غير موجود"
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+
+                        <i class="fa-solid fa-phone-volume"></i>
+
+                    </div>
+
+                    <div class="info-label">
+                        هاتف الأم
+                    </div>
+
+                    <div class="info-value">
+
+                        ${escapeHtml(
+                            getMotherPhone(profileUser) ||
+                            "غير موجود"
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                    </div>
+
+                    <div class="info-label">
+                        العنوان
+                    </div>
+
+                    <div class="info-value">
+
+                        ${escapeHtml(
+                            getAddress(profileUser) ||
+                            "غير محدد"
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+
+                        <i class="fa-solid fa-star"></i>
+
+                    </div>
+
+                    <div class="info-label">
+                        النقاط
+                    </div>
+
+                    <div
+                        class="info-value"
+                        id="infoPoints"
+                    >
+
+                        ${getPoints(profileUser)}
+                        نقطة
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+            ${
+                showAdmin
+
+                ? `
+
+                    <!-- ADMIN POINTS -->
+
+                    <div class="section-title">
+
+                        <h2>
+                            إدارة المخدوم
+                        </h2>
+
+                        <span>
+                            صلاحيات الخادم
+                        </span>
+
+                    </div>
+
+
+                    <section class="admin-card">
+
+
+                        <div class="admin-title">
+
+
+                            <div class="admin-title-icon">
+
+                                <i class="fa-solid fa-star"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <h3>
+                                    تعديل النقاط
+                                </h3>
+
+                                <p>
+                                    إضافة أو خصم النقاط
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="point-buttons">
+
+
+                            <button
+                                class="point-btn minus"
+                                data-point="-5"
+                            >
+                                −5
+                            </button>
+
+
+                            <button
+                                class="point-btn minus"
+                                data-point="-1"
+                            >
+                                −1
+                            </button>
+
+
+                            <button
+                                class="point-btn plus"
+                                data-point="1"
+                            >
+                                +1
+                            </button>
+
+
+                            <button
+                                class="point-btn plus"
+                                data-point="5"
+                            >
+                                +5
+                            </button>
+
+
+                        </div>
+
+
+                        <div class="custom-grid">
+
+
+                            <input
+                                id="customPoint"
+                                type="number"
+                                min="1"
+                                step="1"
+                                placeholder="اكتب عدد النقاط"
+                            >
+
+
+                            <button
+                                id="customAdd"
+                                class="custom-add"
+                            >
+
+                                + إضافة الرقم
+
+                            </button>
+
+
+                            <button
+                                id="customRemove"
+                                class="custom-remove"
+                            >
+
+                                − خصم الرقم
+
+                            </button>
+
+
+                        </div>
+
+
+                    </section>
+
+
+                    <!-- EDIT -->
+
+
+                    <div class="section-title">
+
+                        <h2>
+                            تعديل بيانات المخدوم
+                        </h2>
+
+                        <span>
+                            الخادم فقط
+                        </span>
+
+                    </div>
+
+
+                    <section class="admin-card">
+
+
+                        <div class="edit-grid">
+
+
+                            <div class="edit-field full">
+
+                                <label>
+                                    الاسم الكامل
+                                </label>
+
+                                <input
+                                    id="editName"
+                                    type="text"
+                                    value="${escapeHtml(
+                                        getName(profileUser)
+                                    )}"
+                                >
+
+                            </div>
+
+
+                            <div class="edit-field">
+
+                                <label>
+                                    المرحلة
+                                </label>
+
+                                <select id="editStage">
+
+                                    <option
+                                        value="ابتدائي"
+                                        ${
+                                            getStage(profileUser) ===
+                                            "ابتدائي"
+                                                ? "selected"
+                                                : ""
+                                        }
+                                    >
+                                        ابتدائي
+                                    </option>
+
+                                    <option
+                                        value="إعدادي"
+                                        ${
+                                            getStage(profileUser) ===
+                                            "إعدادي"
+                                                ? "selected"
+                                                : ""
+                                        }
+                                    >
+                                        إعدادي
+                                    </option>
+
+                                    <option
+                                        value="ثانوي"
+                                        ${
+                                            getStage(profileUser) ===
+                                            "ثانوي"
+                                                ? "selected"
+                                                : ""
+                                        }
+                                    >
+                                        ثانوي
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="edit-field">
+
+                                <label>
+                                    الصف
+                                </label>
+
+                                <input
+                                    id="editGrade"
+                                    type="text"
+                                    value="${escapeHtml(
+                                        getGrade(profileUser)
+                                    )}"
+                                >
+
+                            </div>
+
+
+                            <div class="edit-field">
+
+                                <label>
+                                    رقم الهاتف
+                                </label>
+
+                                <input
+                                    id="editPhone"
+                                    type="text"
+                                    value="${escapeHtml(
+                                        getPhone(profileUser)
+                                    )}"
+                                >
+
+                            </div>
+
+
+                            <div class="edit-field">
+
+                                <label>
+                                    تاريخ الميلاد
+                                </label>
+
+                                <input
+                                    id="editBirth"
+                                    type="date"
+                                    value="${escapeHtml(
+                                        getBirthDate(profileUser)
+                                    )}"
+                                >
+
+                            </div>
+
+
+                            <div class="edit-field">
+
+                                <label>
+                                    هاتف الأب
+                                </label>
+
+                                <input
+                                    id="editFather"
+                                    type="text"
+                                    value="${escapeHtml(
+                                        getFatherPhone(profileUser)
+                                    )}"
+                                >
+
+                            </div>
+
+
+                            <div class="edit-field">
+
+                                <label>
+                                    هاتف الأم
+                                </label>
+
+                                <input
+                                    id="editMother"
+                                    type="text"
+                                    value="${escapeHtml(
+                                        getMotherPhone(profileUser)
+                                    )}"
+                                >
+
+                            </div>
+
+
+                            <div class="edit-field full">
+
+                                <label>
+                                    العنوان
+                                </label>
+
+                                <input
+                                    id="editAddress"
+                                    type="text"
+                                    value="${escapeHtml(
+                                        getAddress(profileUser)
+                                    )}"
+                                >
+
+                            </div>
+
+
+                        </div>
+
+
+                        <button
+                            id="saveProfile"
+                            class="save-btn"
+                        >
+
+                            <i class="fa-solid fa-floppy-disk"></i>
+
+                            حفظ بيانات المخدوم
+
+                        </button>
+
+
+                    </section>
+
+
+                    <!-- BAN -->
+
+
+                    <div class="section-title">
+
+                        <h2>
+                            حالة الحساب
+                        </h2>
+
+                        <span>
+                            الحظر
+                        </span>
+
+                    </div>
+
+
+                    <section
+                        id="banCard"
+                        class="ban-card ${
+                            banned
+                                ? "banned"
+                                : ""
+                        }"
+                    >
+
+
+                        <div class="ban-row">
+
+
+                            <div>
+
+                                <h3 id="banTitle">
+
+                                    ${
+                                        banned
+                                            ? "المخدوم محظور حاليًا"
+                                            : "الحساب نشط"
+                                    }
+
+                                </h3>
+
+
+                                <p id="banText">
+
+                                    ${
+                                        banned
+                                            ? "الحساب محظور ولا يمكن استخدامه بشكل طبيعي."
+                                            : "الحساب يعمل بشكل طبيعي."
+                                    }
+
+                                </p>
+
+                            </div>
+
+
+                            <button
+                                id="banButton"
+                                class="ban-button ${
+                                    banned
+                                        ? "unban"
+                                        : ""
+                                }"
+                            >
+
+                                ${
+                                    banned
+
+                                        ? `
+
+                                            <i class="fa-solid fa-unlock"></i>
+
+                                            إلغاء الحظر
+
+                                        `
+
+                                        : `
+
+                                            <i class="fa-solid fa-lock"></i>
+
+                                            حظر المخدوم
+
+                                        `
+                                }
+
+                            </button>
+
+
+                        </div>
+
+
+                    </section>
+
+                `
+
+                : `
+
+                    <div class="section-title">
+
+                        <h2>
+                            خدمات الحساب
+                        </h2>
+
+                        <span>
+                            الوصول السريع
+                        </span>
+
+                    </div>
+
+
+                    <section class="admin-card">
+
+
+                        <button
+                            id="attendanceBtn"
+                            class="save-btn"
+                        >
+
+                            <i class="fa-solid fa-calendar-check"></i>
+
+                            فتح سجل الحضور
+
+                        </button>
+
+
+                    </section>
+
+                `
+
+            }
+
+        `;
+
+
+        /* =============================
+           ADMIN EVENTS
+        ============================== */
+
+
+        if (showAdmin) {
+
+
+            document
+                .querySelectorAll(
+                    "[data-point]"
+                )
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                changePoints(
+                                    Number(
+                                        button.dataset.point
+                                    )
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+
+            document
+                .getElementById(
+                    "customAdd"
+                )
+                .addEventListener(
+                    "click",
+                    () => {
+
+                        customPoints(
+                            true
+                        );
+
+                    }
+                );
+
+
+            document
+                .getElementById(
+                    "customRemove"
+                )
+                .addEventListener(
+                    "click",
+                    () => {
+
+                        customPoints(
+                            false
+                        );
+
+                    }
+                );
+
+
+            document
+                .getElementById(
+                    "saveProfile"
+                )
+                .addEventListener(
+                    "click",
+                    saveProfile
+                );
+
+
+            document
+                .getElementById(
+                    "banButton"
+                )
+                .addEventListener(
+                    "click",
+                    toggleBan
+                );
+
+        }
+        else {
+
+            const attendanceBtn =
+                document.getElementById(
+                    "attendanceBtn"
+                );
+
+
+            if (
+                attendanceBtn
+            ) {
+
+                attendanceBtn.addEventListener(
+                    "click",
+                    () => {
+
+                        window.location.href =
+                            "attendance.html";
+
+                    }
+                );
+
+            }
+
+        }
+
+    }
+
+
+    /* =====================================================
+       POINTS
+    ===================================================== */
+
+
+    async function changePoints(
+        amount
+    ) {
+
+        if (
+            !viewerIsServant
+        ) {
+
+            showToast(
+                "ليس لديك صلاحية تعديل النقاط",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        if (
+            !profileUser ||
+            !amount
+        ) {
+
+            return;
+
+        }
+
+
+        try {
+
+            const ref =
+                db
+                    .collection(
+                        "users"
+                    )
+                    .doc(
+                        profileUser.id
+                    );
+
+
+            let nextPoints =
+                0;
+
+
+            await db.runTransaction(
+                async transaction => {
+
+                    const snap =
+                        await transaction.get(
+                            ref
+                        );
+
+
+                    if (!snap.exists) {
+
+                        throw new Error(
+                            "المخدوم غير موجود"
+                        );
+
+                    }
+
+
+                    const current =
+                        Number(
+                            snap.data().points || 0
+                        );
+
+
+                    nextPoints =
+                        Math.max(
+                            0,
+                            Math.trunc(
+                                current + amount
+                            )
+                        );
+
+
+                    transaction.update(
+                        ref,
+                        {
+
+                            points:
+                                nextPoints,
+
+                            updatedAt:
+                                firebase.firestore
+                                    .FieldValue
+                                    .serverTimestamp()
+
+                        }
+                    );
+
+                }
+            );
+
+
+            profileUser.points =
+                nextPoints;
+
+
+            updatePointsOnly();
+
+
+            showToast(
+
+                amount > 0
+
+                    ? `تم إضافة ${amount} نقطة ✓`
+
+                    : `تم خصم ${Math.abs(amount)} نقطة ✓`
+
+            );
+
+
+            await createNotification(
+
+                profileUser.id,
+
+                amount > 0
+
+                    ? `تم إضافة ${amount} نقطة إلى رصيدك.`
+
+                    : `تم خصم ${Math.abs(amount)} نقطة من رصيدك.`,
+
+                amount > 0
+
+                    ? "تم إضافة نقاط"
+
+                    : "تم خصم نقاط",
+
+                "points",
+
+                amount
+
+            );
+
+        }
+        catch(error) {
+
+            console.error(
+                error
+            );
+
+
+            showToast(
+                "تعذر تعديل النقاط",
+                "error"
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       CUSTOM POINTS
+    ===================================================== */
+
+
+    function customPoints(
+        add
+    ) {
+
+        const input =
+            document.getElementById(
+                "customPoint"
+            );
+
+
+        const value =
+            Math.floor(
+                Number(
+                    input.value
+                )
+            );
+
+
+        if (
+            !Number.isFinite(value) ||
+            value <= 0
+        ) {
+
+            showToast(
+                "اكتب رقمًا صحيحًا",
+                "error"
+            );
+
+            input.focus();
+
+            return;
+
+        }
+
+
+        changePoints(
+            add
+                ? value
+                : -value
+        );
+
+
+        input.value =
+            "";
+
+    }
+
+
+    /* =====================================================
+       UPDATE POINTS ONLY
+    ===================================================== */
+
+
+    function updatePointsOnly() {
+
+        const heroPoints =
+            document.getElementById(
+                "heroPoints"
+            );
+
+
+        const infoPoints =
+            document.getElementById(
+                "infoPoints"
+            );
+
+
+        if (
+            heroPoints
+        ) {
+
+            heroPoints.textContent =
+                getPoints(
+                    profileUser
+                );
+
+        }
+
+
+        if (
+            infoPoints
+        ) {
+
+            infoPoints.textContent =
+                `${getPoints(profileUser)} نقطة`;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       SAVE PROFILE
+    ===================================================== */
+
+
+    async function saveProfile() {
+
+        if (
+            !viewerIsServant
+        ) {
+
+            showToast(
+                "ليس لديك صلاحية تعديل البيانات",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        const name =
+            clean(
+                document.getElementById(
+                    "editName"
+                ).value
+            );
+
+
+        const stage =
+            clean(
+                document.getElementById(
+                    "editStage"
+                ).value
+            );
+
+
+        const grade =
+            clean(
+                document.getElementById(
+                    "editGrade"
+                ).value
+            );
+
+
+        const phone =
+            clean(
+                document.getElementById(
+                    "editPhone"
+                ).value
+            );
+
+
+        const birth =
+            clean(
+                document.getElementById(
+                    "editBirth"
+                ).value
+            );
+
+
+        const father =
+            clean(
+                document.getElementById(
+                    "editFather"
+                ).value
+            );
+
+
+        const mother =
+            clean(
+                document.getElementById(
+                    "editMother"
+                ).value
+            );
+
+
+        const address =
+            clean(
+                document.getElementById(
+                    "editAddress"
+                ).value
+            );
+
+
+        if (!name) {
+
+            showToast(
+                "اكتب اسم المخدوم",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        const button =
+            document.getElementById(
+                "saveProfile"
+            );
+
+
+        button.disabled =
+            true;
+
+
+        button.innerHTML =
+            "جاري الحفظ...";
+
+
+        try {
+
+            const data = {
+
+                fullName:
+                    name,
+
+                name:
+                    name,
+
+                stage:
+                    stage,
+
+                grade:
+                    grade,
+
+                servantGrade:
+                    grade,
+
+                phone:
+                    phone,
+
+                birthDate:
+                    birth,
+
+                fatherPhone:
+                    father,
+
+                motherPhone:
+                    mother,
+
+                address:
+                    address,
+
+                updatedAt:
+                    firebase.firestore
+                        .FieldValue
+                        .serverTimestamp()
+
+            };
+
+
+            await db
+                .collection(
+                    "users"
+                )
+                .doc(
+                    profileUser.id
+                )
+                .update(
+                    data
+                );
+
+
+            profileUser = {
+
+                ...profileUser,
+
+                ...data
+
+            };
+
+
+            renderProfile();
+
+
+            showToast(
+                "تم حفظ بيانات المخدوم ✓"
+            );
+
+        }
+        catch(error) {
+
+            console.error(
+                error
+            );
+
+
+            showToast(
+                "تعذر حفظ البيانات",
+                "error"
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       BAN
+    ===================================================== */
+
+
+    async function toggleBan() {
+
+        if (
+            !viewerIsServant ||
+            !profileUser
+        ) {
+
+            return;
+
+        }
+
+
+        const next =
+            !isBanned(
+                profileUser
+            );
+
+
+        const message =
+            next
+
+                ? "هل تريد حظر هذا المخدوم؟"
+
+                : "هل تريد إلغاء حظر هذا المخدوم؟";
+
+
+        if (
+            !confirm(
+                message
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        try {
+
+            await db
+                .collection(
+                    "users"
+                )
+                .doc(
+                    profileUser.id
+                )
+                .update({
+
+                    banned:
+                        next,
+
+                    isBanned:
+                        next,
+
+                    isBlocked:
+                        next,
+
+                    updatedAt:
+                        firebase.firestore
+                            .FieldValue
+                            .serverTimestamp()
+
+                });
+
+
+            profileUser.banned =
+                next;
+
+            profileUser.isBanned =
+                next;
+
+            profileUser.isBlocked =
+                next;
+
+
+            renderProfile();
+
+
+            showToast(
+
+                next
+
+                    ? "تم حظر المخدوم 🔒"
+
+                    : "تم إلغاء الحظر ✓"
+
+            );
+
+        }
+        catch(error) {
+
+            console.error(
+                error
+            );
+
+
+            showToast(
+                "تعذر تغيير حالة الحساب",
+                "error"
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       NOTIFICATION
+    ===================================================== */
+
+
+    async function createNotification(
+
+        userId,
+        message,
+        title,
+        type,
+        points
+
+    ) {
+
+        try {
+
+            await db
+                .collection(
+                    "notifications"
+                )
+                .doc()
+                .set({
+
+                    userId:
+                        userId,
+
+                    type:
+                        type ||
+                        "points",
+
+                    title:
+                        title ||
+                        "النقاط",
+
+                    message:
+                        message,
+
+                    points:
+                        Number(
+                            points
+                        ) || 0,
+
+                    isRead:
+                        false,
+
+                    timestamp:
+                        firebase.firestore
+                            .FieldValue
+                            .serverTimestamp(),
+
+                    createdAt:
+                        firebase.firestore
+                            .FieldValue
+                            .serverTimestamp()
+
+                });
+
+        }
+        catch(error) {
+
+            console.error(
+                error
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       BACK
+    ===================================================== */
+
+
+    document
+        .getElementById(
+            "backBtn"
+        )
+        .addEventListener(
+            "click",
+            () => {
+
+                if (
+                    document.referrer
+                ) {
+
+                    history.back();
+
+                }
+                else {
+
+                    window.location.href =
+                        "servants.html";
+
+                }
+
+            }
+        );
+
+
+    /* =====================================================
+       REFRESH
+    ===================================================== */
+
+
+    document
+        .getElementById(
+            "refreshBtn"
+        )
+        .addEventListener(
+            "click",
+            async () => {
+
+                const icon =
+                    document.querySelector(
+                        "#refreshBtn i"
+                    );
+
+
+                icon.classList.add(
+                    "fa-spin"
+                );
+
+
+                try {
+
+                    await loadProfileUser();
+
+                    showToast(
+                        "تم تحديث البروفايل ✓"
+                    );
+
+                }
+                catch(error) {
+
+                    console.error(
+                        error
+                    );
+
+
+                    showToast(
+                        "تعذر تحديث البيانات",
+                        "error"
+                    );
+
+                }
+
+
+                setTimeout(
+                    () => {
+
+                        icon.classList.remove(
+                            "fa-spin"
+                        );
+
+                    },
+                    700
+                );
+
+            }
+        );
+
+
+    /* =====================================================
+       START
+    ===================================================== */
+
+
+    window.addEventListener(
+        "DOMContentLoaded",
+        async () => {
+
+            try {
+
+                await loadViewer();
+
+                await loadProfileUser();
+
+            }
+            catch(error) {
+
+                console.error(
+                    "PROFILE ERROR:",
+                    error
+                );
+
+
+                document.getElementById(
+                    "content"
+                ).innerHTML = `
+
+                    <div class="error-box">
+
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+
+                        <h2>
+                            حدث خطأ أثناء تحميل البيانات
+                        </h2>
+
+                        <p>
+                            ${escapeHtml(
+                                error.message ||
+                                "تعذر تحميل الحساب"
+                            )}
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+
+</html>
