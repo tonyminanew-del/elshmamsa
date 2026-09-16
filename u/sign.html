@@ -12,12 +12,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;500;600;700;800&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
 
     <!-- ================= ICONS ================= -->
 
-    <link rel="stylesheet"
+    <link
+        rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <!-- ================= FIREBASE ================= -->
@@ -36,26 +38,28 @@
 
             --navy: #172554;
             --navy-light: #28418f;
+            --navy-dark: #0c1638;
 
             --maroon: #741b24;
             --maroon-light: #9b3039;
+            --maroon-dark: #4b1118;
 
             --gold: #c79a32;
             --gold-light: #f2d889;
+            --gold-soft: rgba(199, 154, 50, .20);
 
             --green: #16a34a;
             --red: #dc2626;
             --orange: #d97706;
 
-            --bg: #f5f7fb;
             --white: #ffffff;
 
             --text: #182033;
             --muted: #858c9b;
 
-            --border: #e9edf3;
+            --border: rgba(255,255,255,.14);
 
-            --shadow: 0 15px 45px rgba(23, 37, 84, .08);
+            --shadow: 0 25px 70px rgba(5, 13, 40, .35);
 
         }
 
@@ -71,471 +75,1944 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        body {
-            min-height: 100vh;
-            background:
-                radial-gradient(circle at 90% 0%, rgba(199, 154, 50, .08), transparent 28%),
-                radial-gradient(circle at 0% 35%, rgba(23, 37, 84, .055), transparent 30%),
-                var(--bg);
-            color: var(--text);
-            font-family: "Tajawal", sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px 0;
+
+        html {
+            min-height: 100%;
         }
 
-        a { text-decoration: none; color: inherit; }
-        button { font-family: inherit; border: none; cursor: pointer; }
-        input { font-family: inherit; }
+
+        body {
+
+            min-height: 100vh;
+
+            font-family: "Tajawal", sans-serif;
+
+            color: white;
+
+            overflow-x: hidden;
+
+            background:
+
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(199,154,50,.16),
+                    transparent 28%
+                ),
+
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(40,65,143,.25),
+                    transparent 32%
+                ),
+
+                radial-gradient(
+                    circle at 50% 100%,
+                    rgba(116,27,36,.25),
+                    transparent 38%
+                ),
+
+                #071027;
+
+        }
+
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+
+        button {
+            font-family: inherit;
+            border: none;
+            cursor: pointer;
+        }
+
+
+        input {
+            font-family: inherit;
+        }
+
+
+        /* =====================================================
+           BACKGROUND
+        ===================================================== */
+
+        .background {
+
+            position: fixed;
+
+            inset: 0;
+
+            overflow: hidden;
+
+            pointer-events: none;
+
+            z-index: 0;
+
+        }
+
+
+        .background::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 600px;
+            height: 600px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(255,255,255,.035);
+
+            top: -300px;
+            right: -240px;
+
+        }
+
+
+        .background::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 500px;
+            height: 500px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(242,216,137,.045);
+
+            bottom: -260px;
+            left: -200px;
+
+        }
+
+
+        .orb {
+
+            position: absolute;
+
+            border-radius: 50%;
+
+            filter: blur(2px);
+
+            opacity: .35;
+
+            animation: floatOrb 8s ease-in-out infinite;
+
+        }
+
+
+        .orb.one {
+
+            width: 170px;
+            height: 170px;
+
+            top: 8%;
+            left: 7%;
+
+            background: rgba(40,65,143,.20);
+
+        }
+
+
+        .orb.two {
+
+            width: 130px;
+            height: 130px;
+
+            bottom: 15%;
+            right: 5%;
+
+            background: rgba(116,27,36,.22);
+
+            animation-delay: -3s;
+
+        }
+
+
+        .orb.three {
+
+            width: 80px;
+            height: 80px;
+
+            top: 48%;
+            left: 3%;
+
+            background: rgba(199,154,50,.14);
+
+            animation-delay: -5s;
+
+        }
+
 
         /* =====================================================
            PAGE
         ===================================================== */
 
         .page {
-            width: min(460px, calc(100% - 22px));
+
+            position: relative;
+
+            z-index: 2;
+
+            width: min(1050px, calc(100% - 28px));
+
+            min-height: 100vh;
+
             margin: auto;
+
+            padding: 28px 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
         }
 
+
         /* =====================================================
-           HERO HEADER (نفس روح main-hero بالصفحة الرئيسية)
+           MAIN CONTAINER
         ===================================================== */
 
-        .auth-hero {
+        .main-card {
+
             position: relative;
+
+            width: 100%;
+
+            min-height: 680px;
+
             overflow: hidden;
-            padding: 30px 26px;
-            border-radius: 34px;
-            color: white;
-            text-align: center;
+
+            border-radius: 42px;
+
+            border: 1px solid rgba(255,255,255,.13);
+
             background:
-                radial-gradient(circle at 8% 10%, rgba(255, 255, 255, .15), transparent 25%),
-                radial-gradient(circle at 95% 95%, rgba(199, 154, 50, .25), transparent 32%),
-                linear-gradient(135deg, #121d45, #263d87 52%, #641c25);
-            box-shadow: 0 22px 55px rgba(23, 37, 84, .19);
-            animation: heroIn .65s ease both;
-            margin-bottom: 16px;
+
+                radial-gradient(
+                    circle at 8% 8%,
+                    rgba(255,255,255,.12),
+                    transparent 25%
+                ),
+
+                radial-gradient(
+                    circle at 92% 92%,
+                    rgba(199,154,50,.20),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 90% 8%,
+                    rgba(40,65,143,.22),
+                    transparent 35%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #101a3d 0%,
+                    #172554 38%,
+                    #28418f 66%,
+                    #741b24 100%
+                );
+
+            box-shadow:
+
+                0 35px 100px rgba(0,0,0,.45),
+
+                inset 0 1px 0 rgba(255,255,255,.10);
+
+            animation: pageIn .75s ease both;
+
         }
 
-        .auth-hero::before {
-            content: "";
-            position: absolute;
-            width: 260px;
-            height: 260px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, .08);
-            left: -150px;
-            bottom: -150px;
-        }
-
-        .auth-hero::after {
-            content: "";
-            position: absolute;
-            width: 320px;
-            height: 320px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, .06);
-            right: -180px;
-            top: -190px;
-        }
-
-        .auth-icon {
-            position: relative;
-            z-index: 2;
-            width: 66px;
-            height: 66px;
-            margin: 0 auto 14px;
-            border-radius: 22px;
-            display: grid;
-            place-items: center;
-            font-size: 26px;
-            background: rgba(255, 255, 255, .12);
-            border: 2px solid rgba(255, 255, 255, .5);
-        }
-
-        .auth-hero h1 {
-            position: relative;
-            z-index: 2;
-            font-family: "Amiri", serif;
-            font-size: 26px;
-            margin-bottom: 6px;
-        }
-
-        .auth-hero p {
-            position: relative;
-            z-index: 2;
-            font-size: 12px;
-            opacity: .75;
-        }
 
         /* =====================================================
-           FORM CARD
+           DECORATIVE CIRCLES
         ===================================================== */
+
+        .circle {
+
+            position: absolute;
+
+            border-radius: 50%;
+
+            pointer-events: none;
+
+        }
+
+
+        .circle.c1 {
+
+            width: 330px;
+            height: 330px;
+
+            left: -190px;
+            bottom: -190px;
+
+            border: 1px solid rgba(255,255,255,.08);
+
+        }
+
+
+        .circle.c2 {
+
+            width: 430px;
+            height: 430px;
+
+            left: -240px;
+            bottom: -240px;
+
+            border: 1px solid rgba(255,255,255,.035);
+
+        }
+
+
+        .circle.c3 {
+
+            width: 380px;
+            height: 380px;
+
+            right: -220px;
+            top: -220px;
+
+            border: 1px solid rgba(255,255,255,.07);
+
+        }
+
+
+        .circle.c4 {
+
+            width: 500px;
+            height: 500px;
+
+            right: -280px;
+            top: -280px;
+
+            border: 1px solid rgba(255,255,255,.025);
+
+        }
+
+
+        /* =====================================================
+           INNER GLOW
+        ===================================================== */
+
+        .glow {
+
+            position: absolute;
+
+            width: 240px;
+            height: 240px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,.035);
+
+            filter: blur(15px);
+
+            top: 25%;
+            left: 35%;
+
+            pointer-events: none;
+
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .content {
+
+            position: relative;
+
+            z-index: 5;
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            min-height: 680px;
+
+        }
+
+
+        /* =====================================================
+           LEFT / HERO
+        ===================================================== */
+
+        .hero-side {
+
+            padding: 65px 50px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            align-items: center;
+
+            text-align: center;
+
+        }
+
+
+        .hero-icon {
+
+            width: 92px;
+            height: 92px;
+
+            border-radius: 30px;
+
+            display: grid;
+
+            place-items: center;
+
+            font-size: 38px;
+
+            margin-bottom: 25px;
+
+            color: var(--gold-light);
+
+            background: rgba(255,255,255,.09);
+
+            border: 2px solid rgba(255,255,255,.35);
+
+            box-shadow:
+
+                0 18px 45px rgba(0,0,0,.20),
+
+                inset 0 1px 0 rgba(255,255,255,.15);
+
+            animation: iconFloat 4s ease-in-out infinite;
+
+        }
+
+
+        .hero-label {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 8px 15px;
+
+            margin-bottom: 15px;
+
+            border-radius: 30px;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            color: var(--gold-light);
+
+            background: rgba(199,154,50,.10);
+
+            border: 1px solid rgba(242,216,137,.20);
+
+        }
+
+
+        .hero-label i {
+            font-size: 9px;
+        }
+
+
+        .hero-side h1 {
+
+            font-family: "Amiri", serif;
+
+            font-size: clamp(32px, 4vw, 48px);
+
+            line-height: 1.25;
+
+            margin-bottom: 8px;
+
+            text-shadow: 0 4px 20px rgba(0,0,0,.22);
+
+        }
+
+
+        .church-name {
+
+            font-family: "Amiri", serif;
+
+            font-size: 20px;
+
+            line-height: 1.7;
+
+            color: var(--gold-light);
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .hero-description {
+
+            max-width: 430px;
+
+            color: rgba(255,255,255,.72);
+
+            font-size: 13px;
+
+            line-height: 2;
+
+        }
+
+
+        .gold-line {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            width: min(280px, 90%);
+
+            margin: 28px auto;
+
+        }
+
+
+        .gold-line::before,
+        .gold-line::after {
+
+            content: "";
+
+            height: 1px;
+
+            flex: 1;
+
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(242,216,137,.55)
+            );
+
+        }
+
+
+        .gold-line::after {
+
+            background: linear-gradient(
+                90deg,
+                rgba(242,216,137,.55),
+                transparent
+            );
+
+        }
+
+
+        .gold-line i {
+
+            color: var(--gold-light);
+
+            font-size: 11px;
+
+        }
+
+
+        /* =====================================================
+           RIGHT / FORM SIDE
+        ===================================================== */
+
+        .form-side {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 45px;
+
+        }
+
 
         .auth-card {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 29px;
-            padding: 24px 22px;
-            box-shadow: var(--shadow);
-            animation: heroIn .65s ease .05s both;
-        }
 
-        .field {
-            margin-bottom: 18px;
-        }
-
-        .field label {
-            display: block;
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--navy);
-            margin-bottom: 8px;
-        }
-
-        .input-wrap {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .input-wrap input {
             width: 100%;
-            height: 50px;
-            padding: 0 44px 0 16px;
-            border-radius: 15px;
-            border: 1.5px solid var(--border);
-            background: #f8f9fc;
-            font-size: 14px;
+
+            max-width: 440px;
+
+            padding: 30px;
+
+            border-radius: 30px;
+
+            background:
+
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.96),
+                    rgba(248,249,253,.92)
+                );
+
+            border: 1px solid rgba(255,255,255,.45);
+
+            box-shadow:
+
+                0 25px 60px rgba(0,0,0,.28),
+
+                inset 0 1px 0 rgba(255,255,255,.8);
+
             color: var(--text);
-            outline: none;
-            transition: .2s;
+
+            animation: cardIn .75s ease .1s both;
+
         }
 
-        .input-wrap input:focus {
-            border-color: var(--navy-light);
-            background: white;
-            box-shadow: 0 0 0 3px rgba(40, 65, 143, .1);
+
+        .form-header {
+
+            text-align: center;
+
+            margin-bottom: 25px;
+
         }
 
-        .input-wrap .field-icon {
-            position: absolute;
-            right: 14px;
-            color: var(--muted);
-            font-size: 14px;
-            pointer-events: none;
-        }
 
-        .toggle-eye {
-            position: absolute;
-            left: 14px;
-            background: none;
-            color: var(--muted);
-            font-size: 15px;
+        .form-header-icon {
+
+            width: 54px;
+            height: 54px;
+
+            border-radius: 18px;
+
+            margin: 0 auto 12px;
+
             display: grid;
+
             place-items: center;
-            width: 24px;
-            height: 24px;
+
+            color: white;
+
+            font-size: 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--navy),
+                    var(--navy-light)
+                );
+
+            box-shadow:
+                0 10px 25px rgba(23,37,84,.22);
+
         }
 
-        .toggle-eye:active { transform: scale(.9); }
 
-        .field-error {
-            display: none;
-            margin-top: 7px;
+        .form-header h2 {
+
+            font-family: "Amiri", serif;
+
+            color: var(--navy);
+
+            font-size: 24px;
+
+            margin-bottom: 4px;
+
+        }
+
+
+        .form-header p {
+
+            color: var(--muted);
+
             font-size: 11px;
-            color: var(--red);
-            font-weight: 700;
+
         }
 
-        .field-error.show { display: block; }
 
         /* =====================================================
-           STRENGTH METER (مطابق للصورة)
+           FIELDS
+        ===================================================== */
+
+        .field {
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .field label {
+
+            display: block;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            color: var(--navy);
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .input-wrap {
+
+            position: relative;
+
+            display: flex;
+
+            align-items: center;
+
+        }
+
+
+        .input-wrap input {
+
+            width: 100%;
+
+            height: 52px;
+
+            padding: 0 45px 0 45px;
+
+            border-radius: 16px;
+
+            border: 1.5px solid #e5e9f0;
+
+            background: #f7f8fb;
+
+            font-size: 14px;
+
+            color: var(--text);
+
+            outline: none;
+
+            transition: .25s;
+
+        }
+
+
+        .input-wrap input::placeholder {
+
+            color: #a7adba;
+
+        }
+
+
+        .input-wrap input:focus {
+
+            border-color: var(--navy-light);
+
+            background: white;
+
+            box-shadow:
+
+                0 0 0 4px rgba(40,65,143,.09),
+
+                0 7px 20px rgba(23,37,84,.06);
+
+        }
+
+
+        .input-wrap .field-icon {
+
+            position: absolute;
+
+            right: 15px;
+
+            color: var(--muted);
+
+            font-size: 14px;
+
+            pointer-events: none;
+
+            transition: .2s;
+
+        }
+
+
+        .input-wrap:focus-within .field-icon {
+
+            color: var(--navy-light);
+
+        }
+
+
+        .toggle-eye {
+
+            position: absolute;
+
+            left: 13px;
+
+            background: none;
+
+            color: var(--muted);
+
+            font-size: 15px;
+
+            display: grid;
+
+            place-items: center;
+
+            width: 28px;
+
+            height: 28px;
+
+            border-radius: 8px;
+
+            transition: .2s;
+
+        }
+
+
+        .toggle-eye:hover {
+
+            color: var(--navy);
+
+            background: rgba(23,37,84,.06);
+
+        }
+
+
+        .toggle-eye:active {
+
+            transform: scale(.9);
+
+        }
+
+
+        .field-error {
+
+            display: none;
+
+            margin-top: 7px;
+
+            font-size: 11px;
+
+            color: var(--red);
+
+            font-weight: 700;
+
+        }
+
+
+        .field-error.show {
+
+            display: block;
+
+        }
+
+
+        /* =====================================================
+           PASSWORD STRENGTH
         ===================================================== */
 
         .strength-wrap {
+
             margin-top: 10px;
+
+            padding: 13px;
+
+            border-radius: 15px;
+
+            background: #f8f9fc;
+
+            border: 1px solid #edf0f4;
+
         }
+
 
         .strength-label {
+
             font-size: 11px;
+
             font-weight: 800;
-            margin-bottom: 6px;
+
+            margin-bottom: 7px;
+
         }
+
 
         .strength-bars {
+
             display: flex;
+
             gap: 6px;
-            margin-bottom: 10px;
+
+            margin-bottom: 12px;
+
         }
+
 
         .strength-bars span {
+
             flex: 1;
+
             height: 5px;
-            border-radius: 4px;
-            background: #edf0f4;
+
+            border-radius: 5px;
+
+            background: #e8ebf0;
+
             transition: .25s;
+
         }
+
 
         .strength-checklist {
+
             display: flex;
+
             flex-direction: column;
+
             gap: 7px;
+
         }
+
 
         .check-item {
+
             display: flex;
+
             align-items: center;
+
             justify-content: space-between;
-            font-size: 11.5px;
+
+            font-size: 11px;
+
             color: var(--muted);
+
             transition: .2s;
+
         }
+
 
         .check-item i {
+
             font-size: 13px;
+
             color: #cbd2dd;
+
             transition: .2s;
+
         }
+
 
         .check-item.valid {
+
             color: var(--text);
+
         }
+
 
         .check-item.valid i {
+
             color: var(--green);
+
         }
 
+
         /* =====================================================
-           BUTTON
+           MAIN BUTTON
         ===================================================== */
 
         .btn-main {
+
+            position: relative;
+
+            overflow: hidden;
+
             width: 100%;
-            height: 54px;
+
+            height: 55px;
+
             border-radius: 17px;
-            background: linear-gradient(135deg, var(--maroon), var(--maroon-light));
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    var(--maroon),
+                    var(--maroon-light)
+                );
+
             color: white;
+
             font-size: 15px;
+
             font-weight: 800;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
             gap: 10px;
-            box-shadow: 0 14px 30px rgba(116, 27, 36, .25);
-            transition: .2s;
-            margin-top: 6px;
+
+            box-shadow:
+
+                0 14px 30px rgba(116,27,36,.25),
+
+                inset 0 1px 0 rgba(255,255,255,.15);
+
+            transition: .25s;
+
+            margin-top: 8px;
+
         }
 
-        .btn-main:active { transform: scale(.98); }
+
+        .btn-main::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 120px;
+            height: 100%;
+
+            top: 0;
+            left: -150px;
+
+            transform: skewX(-20deg);
+
+            background: rgba(255,255,255,.14);
+
+            transition: .55s;
+
+        }
+
+
+        .btn-main:hover::before {
+
+            left: 110%;
+
+        }
+
+
+        .btn-main:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 18px 35px rgba(116,27,36,.32);
+
+        }
+
+
+        .btn-main:active {
+
+            transform: scale(.98);
+
+        }
+
 
         .btn-main:disabled {
+
             opacity: .55;
+
             box-shadow: none;
+
             cursor: not-allowed;
+
         }
+
 
         .btn-main .spinner {
-            width: 16px;
-            height: 16px;
+
+            width: 17px;
+
+            height: 17px;
+
             border-radius: 50%;
-            border: 2.5px solid rgba(255, 255, 255, .4);
+
+            border: 2.5px solid rgba(255,255,255,.4);
+
             border-top-color: white;
+
             animation: spin .7s linear infinite;
+
             display: none;
+
         }
 
-        .btn-main.loading .spinner { display: inline-block; }
-        .btn-main.loading .btn-text { opacity: .85; }
+
+        .btn-main.loading .spinner {
+
+            display: inline-block;
+
+        }
+
+
+        .btn-main.loading .btn-text {
+
+            opacity: .85;
+
+        }
+
+
+        /* =====================================================
+           SWITCH LINK
+        ===================================================== */
 
         .switch-link {
+
             text-align: center;
-            margin-top: 16px;
+
+            margin-top: 18px;
+
             font-size: 12px;
+
             color: var(--muted);
+
         }
 
+
         .switch-link a {
+
             color: var(--navy);
+
             font-weight: 800;
+
+            transition: .2s;
+
         }
+
+
+        .switch-link a:hover {
+
+            color: var(--maroon);
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .footer {
+
+            margin-top: 18px;
+
+            text-align: center;
+
+            color: rgba(255,255,255,.48);
+
+            font-size: 10px;
+
+        }
+
+
+        .footer i {
+
+            color: var(--gold);
+
+            margin: 0 4px;
+
+        }
+
 
         /* =====================================================
            TOAST
         ===================================================== */
 
         .toast {
+
             position: fixed;
+
             bottom: 24px;
+
             left: 50%;
+
             transform: translateX(-50%) translateY(20px);
+
             background: var(--navy);
+
             color: white;
+
             padding: 13px 20px;
+
             border-radius: 14px;
+
             font-size: 12.5px;
+
             font-weight: 700;
+
             display: flex;
+
             align-items: center;
+
             gap: 10px;
-            box-shadow: 0 15px 35px rgba(23, 37, 84, .3);
+
+            box-shadow:
+
+                0 15px 35px rgba(0,0,0,.30);
+
             opacity: 0;
+
             pointer-events: none;
+
             transition: .3s;
-            z-index: 999;
+
+            z-index: 9999;
+
             max-width: 90%;
+
+            text-align: center;
+
         }
+
 
         .toast.show {
+
             opacity: 1;
+
             transform: translateX(-50%) translateY(0);
+
         }
 
-        .toast.error { background: var(--maroon); }
-        .toast.success { background: var(--green); }
+
+        .toast.error {
+
+            background: var(--maroon);
+
+        }
+
+
+        .toast.success {
+
+            background: var(--green);
+
+        }
+
 
         /* =====================================================
            ANIMATIONS
         ===================================================== */
 
-        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes spin {
 
-        @keyframes heroIn {
-            from { opacity: 0; transform: translateY(18px); }
-            to { opacity: 1; transform: translateY(0); }
+            to {
+                transform: rotate(360deg);
+            }
+
         }
+
+
+        @keyframes pageIn {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(25px)
+                    scale(.98);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+
+            }
+
+        }
+
+
+        @keyframes cardIn {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateX(-20px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateX(0);
+
+            }
+
+        }
+
+
+        @keyframes iconFloat {
+
+            0%, 100% {
+
+                transform: translateY(0);
+
+            }
+
+            50% {
+
+                transform: translateY(-7px);
+
+            }
+
+        }
+
+
+        @keyframes floatOrb {
+
+            0%, 100% {
+
+                transform: translate(0,0);
+
+            }
+
+            50% {
+
+                transform: translate(15px,-20px);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           TABLET
+        ===================================================== */
+
+        @media (max-width: 800px) {
+
+            .page {
+
+                padding: 18px 0;
+
+            }
+
+
+            .main-card {
+
+                min-height: auto;
+
+                border-radius: 34px;
+
+            }
+
+
+            .content {
+
+                grid-template-columns: 1fr;
+
+                min-height: auto;
+
+            }
+
+
+            .hero-side {
+
+                padding: 45px 25px 30px;
+
+            }
+
+
+            .hero-icon {
+
+                width: 76px;
+                height: 76px;
+
+                font-size: 30px;
+
+                border-radius: 25px;
+
+            }
+
+
+            .hero-side h1 {
+
+                font-size: 34px;
+
+            }
+
+
+            .church-name {
+
+                font-size: 18px;
+
+            }
+
+
+            .form-side {
+
+                padding: 20px 25px 40px;
+
+            }
+
+
+        }
+
 
         /* =====================================================
            MOBILE
         ===================================================== */
 
-        @media (max-width: 480px) {
-            .auth-hero { padding: 26px 20px; border-radius: 28px; }
-            .auth-card { padding: 20px 16px; border-radius: 25px; }
+        @media (max-width: 520px) {
+
+            body {
+
+                background:
+
+                    radial-gradient(
+                        circle at 10% 5%,
+                        rgba(199,154,50,.12),
+                        transparent 30%
+                    ),
+
+                    linear-gradient(
+                        145deg,
+                        #071027,
+                        #101a3d 50%,
+                        #44131a
+                    );
+
+            }
+
+
+            .page {
+
+                width: calc(100% - 14px);
+
+                padding: 10px 0;
+
+            }
+
+
+            .main-card {
+
+                border-radius: 28px;
+
+            }
+
+
+            .hero-side {
+
+                padding: 35px 18px 25px;
+
+            }
+
+
+            .hero-icon {
+
+                width: 70px;
+                height: 70px;
+
+                font-size: 27px;
+
+                border-radius: 23px;
+
+                margin-bottom: 18px;
+
+            }
+
+
+            .hero-label {
+
+                font-size: 10px;
+
+            }
+
+
+            .hero-side h1 {
+
+                font-size: 29px;
+
+            }
+
+
+            .church-name {
+
+                font-size: 16px;
+
+            }
+
+
+            .hero-description {
+
+                font-size: 11.5px;
+
+            }
+
+
+            .gold-line {
+
+                margin: 20px auto;
+
+            }
+
+
+            .form-side {
+
+                padding: 10px 12px 25px;
+
+            }
+
+
+            .auth-card {
+
+                padding: 22px 16px;
+
+                border-radius: 24px;
+
+            }
+
+
+            .form-header h2 {
+
+                font-size: 22px;
+
+            }
+
+
+            .input-wrap input {
+
+                height: 50px;
+
+            }
+
+
+            .strength-wrap {
+
+                padding: 11px;
+
+            }
+
+
+            .check-item {
+
+                font-size: 10.5px;
+
+            }
+
+
         }
+
 
     </style>
 
 </head>
 
+
 <body>
 
-    <div class="page">
 
-        <!-- =================================================
-             HERO
-        ================================================== -->
+    <!-- =====================================================
+         BACKGROUND
+    ====================================================== -->
 
-        <section class="auth-hero">
+    <div class="background">
 
-            <div class="auth-icon">
-                <i class="fa-solid fa-user-plus"></i>
-            </div>
-
-            <h1>إنشاء حساب جديد</h1>
-            <p>مدرسة الشمامسة - كنيسة الشهيد العظيم استيفانوس ومارمينا العجايبي</p>
-
-        </section>
-
-        <!-- =================================================
-             FORM
-        ================================================== -->
-
-        <section class="auth-card">
-
-            <form id="signupForm" onsubmit="return false;">
-
-                <!-- USERNAME -->
-
-                <div class="field">
-                    <label for="username">اسم المستخدم</label>
-
-                    <div class="input-wrap">
-                        <input type="text" id="username" placeholder="اكتب اسم المستخدم" autocomplete="off">
-                        <i class="fa-solid fa-user field-icon"></i>
-                    </div>
-
-                    <div class="field-error" id="usernameError">هذا الحقل مطلوب</div>
-                </div>
-
-                <!-- PASSWORD -->
-
-                <div class="field">
-                    <label for="password">كلمة المرور الجديدة</label>
-
-                    <div class="input-wrap">
-                        <input type="password" id="password" placeholder="اكتب كلمة المرور" autocomplete="new-password">
-                        <button type="button" class="toggle-eye" data-target="password">
-                            <i class="fa-regular fa-eye"></i>
-                        </button>
-                    </div>
-
-                    <div class="strength-wrap">
-
-                        <div class="strength-label" id="strengthLabel">ضعيفة</div>
-
-                        <div class="strength-bars">
-                            <span id="bar1"></span>
-                            <span id="bar2"></span>
-                            <span id="bar3"></span>
-                            <span id="bar4"></span>
-                        </div>
-
-                        <div class="strength-checklist">
-
-                            <div class="check-item" id="check-len">
-                                <span>٨ أحرف على الأقل</span>
-                                <i class="fa-solid fa-circle-xmark"></i>
-                            </div>
-
-                            <div class="check-item" id="check-upper">
-                                <span>حرف كبير واحد على الأقل</span>
-                                <i class="fa-solid fa-circle-xmark"></i>
-                            </div>
-
-                            <div class="check-item" id="check-num">
-                                <span>رقم واحد على الأقل</span>
-                                <i class="fa-solid fa-circle-xmark"></i>
-                            </div>
-
-                            <div class="check-item" id="check-special">
-                                <span>رمز خاص (!@#$%...)</span>
-                                <i class="fa-solid fa-circle-xmark"></i>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <!-- SUBMIT -->
-
-                <button type="button" class="btn-main" id="submitBtn">
-                    <span class="spinner"></span>
-                    <span class="btn-text">تفعيل الحساب</span>
-                </button>
-
-                <div class="switch-link">
-                    لديك حساب مفعل بالفعل؟ <a href="login.html">تسجيل الدخول</a>
-                </div>
-
-            </form>
-
-        </section>
+        <div class="orb one"></div>
+        <div class="orb two"></div>
+        <div class="orb three"></div>
 
     </div>
+
+
+    <!-- =====================================================
+         PAGE
+    ====================================================== -->
+
+    <main class="page">
+
+
+        <section class="main-card">
+
+
+            <!-- DECORATIONS -->
+
+            <div class="circle c1"></div>
+            <div class="circle c2"></div>
+            <div class="circle c3"></div>
+            <div class="circle c4"></div>
+
+            <div class="glow"></div>
+
+
+            <div class="content">
+
+
+                <!-- =================================================
+                     HERO
+                ================================================== -->
+
+                <section class="hero-side">
+
+
+                    <div class="hero-icon">
+
+                        <i class="fa-solid fa-user-plus"></i>
+
+                    </div>
+
+
+                    <div class="hero-label">
+
+                        <i class="fa-solid fa-star"></i>
+
+                        خدمة مدرسة الشمامسة
+
+                        <i class="fa-solid fa-star"></i>
+
+                    </div>
+
+
+                    <h1>
+
+                        إنشاء حساب جديد
+
+                    </h1>
+
+
+                    <div class="church-name">
+
+                        مدرسة الشمامسة
+
+                        <br>
+
+                        كنيسة الشهيد العظيم استيفانوس
+                        ومارمينا العجايبي
+
+                    </div>
+
+
+                    <p class="hero-description">
+
+                        أنشئ حسابك للانضمام إلى نظام مدرسة الشمامسة
+                        ومتابعة الدروس والألحان والنقاط والأنشطة
+                        الخاصة بالخدمة.
+
+                    </p>
+
+
+                    <div class="gold-line">
+
+                        <i class="fa-solid fa-cross"></i>
+
+                    </div>
+
+
+                    <div class="footer">
+
+                        كنيستنا بيتنا الثاني
+
+                        <i class="fa-solid fa-heart"></i>
+
+                    </div>
+
+
+                </section>
+
+
+
+                <!-- =================================================
+                     FORM
+                ================================================== -->
+
+                <section class="form-side">
+
+
+                    <div class="auth-card">
+
+
+                        <div class="form-header">
+
+
+                            <div class="form-header-icon">
+
+                                <i class="fa-solid fa-user-plus"></i>
+
+                            </div>
+
+
+                            <h2>
+
+                                بيانات الحساب
+
+                            </h2>
+
+
+                            <p>
+
+                                أدخل بياناتك لإنشاء حساب جديد
+
+                            </p>
+
+
+                        </div>
+
+
+
+                        <form id="signupForm" onsubmit="return false;">
+
+
+                            <!-- USERNAME -->
+
+                            <div class="field">
+
+
+                                <label for="username">
+
+                                    اسم المستخدم
+
+                                </label>
+
+
+                                <div class="input-wrap">
+
+
+                                    <input
+                                        type="text"
+                                        id="username"
+                                        placeholder="اكتب اسم المستخدم"
+                                        autocomplete="off"
+                                    >
+
+
+                                    <i class="fa-solid fa-user field-icon"></i>
+
+
+                                </div>
+
+
+                                <div
+                                    class="field-error"
+                                    id="usernameError"
+                                >
+
+                                    هذا الحقل مطلوب
+
+                                </div>
+
+
+                            </div>
+
+
+
+                            <!-- PASSWORD -->
+
+                            <div class="field">
+
+
+                                <label for="password">
+
+                                    كلمة المرور الجديدة
+
+                                </label>
+
+
+                                <div class="input-wrap">
+
+
+                                    <input
+                                        type="password"
+                                        id="password"
+                                        placeholder="اكتب كلمة المرور"
+                                        autocomplete="new-password"
+                                    >
+
+
+                                    <i class="fa-solid fa-lock field-icon"></i>
+
+
+                                    <button
+                                        type="button"
+                                        class="toggle-eye"
+                                        data-target="password"
+                                    >
+
+                                        <i class="fa-regular fa-eye"></i>
+
+                                    </button>
+
+
+                                </div>
+
+
+
+                                <!-- PASSWORD STRENGTH -->
+
+                                <div class="strength-wrap">
+
+
+                                    <div
+                                        class="strength-label"
+                                        id="strengthLabel"
+                                    >
+
+                                        ضعيفة
+
+                                    </div>
+
+
+                                    <div class="strength-bars">
+
+
+                                        <span id="bar1"></span>
+
+                                        <span id="bar2"></span>
+
+                                        <span id="bar3"></span>
+
+                                        <span id="bar4"></span>
+
+
+                                    </div>
+
+
+                                    <div class="strength-checklist">
+
+
+                                        <div
+                                            class="check-item"
+                                            id="check-len"
+                                        >
+
+                                            <span>
+                                                ٨ أحرف على الأقل
+                                            </span>
+
+                                            <i class="fa-solid fa-circle-xmark"></i>
+
+                                        </div>
+
+
+                                        <div
+                                            class="check-item"
+                                            id="check-upper"
+                                        >
+
+                                            <span>
+                                                حرف كبير واحد على الأقل
+                                            </span>
+
+                                            <i class="fa-solid fa-circle-xmark"></i>
+
+                                        </div>
+
+
+                                        <div
+                                            class="check-item"
+                                            id="check-num"
+                                        >
+
+                                            <span>
+                                                رقم واحد على الأقل
+                                            </span>
+
+                                            <i class="fa-solid fa-circle-xmark"></i>
+
+                                        </div>
+
+
+                                        <div
+                                            class="check-item"
+                                            id="check-special"
+                                        >
+
+                                            <span>
+                                                رمز خاص (!@#$%...)
+                                            </span>
+
+                                            <i class="fa-solid fa-circle-xmark"></i>
+
+                                        </div>
+
+
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+
+
+
+                            <!-- SUBMIT -->
+
+                            <button
+                                type="button"
+                                class="btn-main"
+                                id="submitBtn"
+                            >
+
+                                <span class="spinner"></span>
+
+                                <span class="btn-text">
+                                    تفعيل الحساب
+                                </span>
+
+                            </button>
+
+
+
+                            <!-- LOGIN -->
+
+                            <div class="switch-link">
+
+                                لديك حساب مفعل بالفعل؟
+
+                                <a href="login.html">
+
+                                    تسجيل الدخول
+
+                                </a>
+
+                            </div>
+
+
+                        </form>
+
+
+                    </div>
+
+
+                </section>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
 
     <!-- =====================================================
          TOAST
     ====================================================== -->
 
     <div class="toast" id="toast">
+
         <i class="fa-solid fa-circle-info"></i>
+
         <span id="toastText"></span>
+
     </div>
+
+
 
     <!-- =====================================================
          JAVASCRIPT
@@ -543,86 +2020,152 @@
 
     <script>
 
+
         /* =================================================
            FIREBASE
         ================================================= */
 
         const firebaseConfig = {
-            apiKey: "AIzaSyDk8JXHvo9up6Hof7d6S_Or8ICnaGnuIUg",
+
+            apiKey: "AIzaSyDk8JXHvo9upH6of7d6S_Or8ICnaGnuIUg",
+
             authDomain: "tony-c78c0.firebaseapp.com",
+
             projectId: "tony-c78c0",
+
             storageBucket: "tony-c78c0.firebasestorage.app",
+
             messagingSenderId: "182062544524",
+
             appId: "1:182062544524:web:59afdba4f0d1dfd929ada9",
+
             measurementId: "G-4FER9HW0JS"
+
         };
+
 
         firebase.initializeApp(firebaseConfig);
 
+
         const db = firebase.firestore();
 
-        // اسم الكولكشين اللي هيتم تخزين المستخدمين الجدد فيها
+
         const USERS_COLLECTION = "users";
+
 
 
         /* =================================================
            ELEMENTS
         ================================================= */
 
-        const usernameInput = document.getElementById("username");
-        const passwordInput = document.getElementById("password");
+        const usernameInput =
+            document.getElementById("username");
 
-        const usernameError = document.getElementById("usernameError");
 
-        const submitBtn = document.getElementById("submitBtn");
+        const passwordInput =
+            document.getElementById("password");
 
-        const toast = document.getElementById("toast");
-        const toastText = document.getElementById("toastText");
+
+        const usernameError =
+            document.getElementById("usernameError");
+
+
+        const submitBtn =
+            document.getElementById("submitBtn");
+
+
+        const toast =
+            document.getElementById("toast");
+
+
+        const toastText =
+            document.getElementById("toastText");
+
 
 
         /* =================================================
-           TOAST HELPER
+           TOAST
         ================================================= */
 
         let toastTimer = null;
 
+
         function showToast(message, type = "info") {
+
 
             clearTimeout(toastTimer);
 
-            toast.className = "toast show " + type;
-            toastText.textContent = message;
+
+            toast.className =
+                "toast show " + type;
+
+
+            toastText.textContent =
+                message;
+
 
             toastTimer = setTimeout(() => {
+
                 toast.classList.remove("show");
+
             }, 3200);
 
         }
+
 
 
         /* =================================================
            SHOW / HIDE PASSWORD
         ================================================= */
 
-        document.querySelectorAll(".toggle-eye").forEach(btn => {
+        document
+            .querySelectorAll(".toggle-eye")
+            .forEach(btn => {
 
-            btn.addEventListener("click", () => {
 
-                const targetId = btn.getAttribute("data-target");
-                const input = document.getElementById(targetId);
-                const icon = btn.querySelector("i");
+                btn.addEventListener("click", () => {
 
-                if (input.type === "password") {
-                    input.type = "text";
-                    icon.className = "fa-regular fa-eye-slash";
-                } else {
-                    input.type = "password";
-                    icon.className = "fa-regular fa-eye";
-                }
+
+                    const targetId =
+                        btn.getAttribute("data-target");
+
+
+                    const input =
+                        document.getElementById(targetId);
+
+
+                    const icon =
+                        btn.querySelector("i");
+
+
+                    if (input.type === "password") {
+
+
+                        input.type = "text";
+
+
+                        icon.className =
+                            "fa-regular fa-eye-slash";
+
+
+                    } else {
+
+
+                        input.type = "password";
+
+
+                        icon.className =
+                            "fa-regular fa-eye";
+
+
+                    }
+
+
+                });
+
 
             });
 
-        });
 
 
         /* =================================================
@@ -630,195 +2173,538 @@
         ================================================= */
 
         const bars = [
+
             document.getElementById("bar1"),
+
             document.getElementById("bar2"),
+
             document.getElementById("bar3"),
+
             document.getElementById("bar4")
+
         ];
 
-        const strengthLabel = document.getElementById("strengthLabel");
+
+        const strengthLabel =
+            document.getElementById("strengthLabel");
+
 
         const checks = {
-            len: document.getElementById("check-len"),
-            upper: document.getElementById("check-upper"),
-            num: document.getElementById("check-num"),
-            special: document.getElementById("check-special")
+
+            len:
+                document.getElementById("check-len"),
+
+            upper:
+                document.getElementById("check-upper"),
+
+            num:
+                document.getElementById("check-num"),
+
+            special:
+                document.getElementById("check-special")
+
         };
+
+
 
         function setCheck(el, valid) {
 
-            const icon = el.querySelector("i");
+
+            const icon =
+                el.querySelector("i");
+
 
             if (valid) {
+
+
                 el.classList.add("valid");
-                icon.className = "fa-solid fa-circle-check";
+
+
+                icon.className =
+                    "fa-solid fa-circle-check";
+
+
             } else {
+
+
                 el.classList.remove("valid");
-                icon.className = "fa-solid fa-circle-xmark";
+
+
+                icon.className =
+                    "fa-solid fa-circle-xmark";
+
+
             }
 
         }
+
+
 
         function evaluatePassword(value) {
 
+
             const rules = {
-                len: value.length >= 8,
-                upper: /[A-Z]/.test(value),
-                num: /[0-9]/.test(value),
-                special: /[!@#$%^&*()_\-+=\[\]{};':"\\|,.<>\/?~`]/.test(value)
+
+
+                len:
+                    value.length >= 8,
+
+
+                upper:
+                    /[A-Z]/.test(value),
+
+
+                num:
+                    /[0-9]/.test(value),
+
+
+                special:
+                    /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`]/.test(value)
+
+
             };
 
-            setCheck(checks.len, rules.len);
-            setCheck(checks.upper, rules.upper);
-            setCheck(checks.num, rules.num);
-            setCheck(checks.special, rules.special);
 
-            const score = Object.values(rules).filter(Boolean).length;
+            setCheck(
+                checks.len,
+                rules.len
+            );
+
+
+            setCheck(
+                checks.upper,
+                rules.upper
+            );
+
+
+            setCheck(
+                checks.num,
+                rules.num
+            );
+
+
+            setCheck(
+                checks.special,
+                rules.special
+            );
+
+
+            const score =
+                Object.values(rules)
+                    .filter(Boolean)
+                    .length;
+
+
 
             bars.forEach((bar, index) => {
 
+
                 if (index < score) {
 
-                    if (score <= 1) bar.style.background = "var(--red)";
-                    else if (score === 2) bar.style.background = "var(--orange)";
-                    else if (score === 3) bar.style.background = "var(--gold)";
-                    else bar.style.background = "var(--green)";
+
+                    if (score <= 1) {
+
+                        bar.style.background =
+                            "var(--red)";
+
+                    }
+
+                    else if (score === 2) {
+
+                        bar.style.background =
+                            "var(--orange)";
+
+                    }
+
+                    else if (score === 3) {
+
+                        bar.style.background =
+                            "var(--gold)";
+
+                    }
+
+                    else {
+
+                        bar.style.background =
+                            "var(--green)";
+
+                    }
+
 
                 } else {
-                    bar.style.background = "#edf0f4";
+
+
+                    bar.style.background =
+                        "#e8ebf0";
+
+
                 }
+
 
             });
 
-            if (score <= 1) strengthLabel.textContent = "ضعيفة";
-            else if (score === 2) strengthLabel.textContent = "متوسطة";
-            else if (score === 3) strengthLabel.textContent = "جيدة";
-            else strengthLabel.textContent = "قوية";
+
+
+            if (score <= 1) {
+
+                strengthLabel.textContent =
+                    "ضعيفة";
+
+            }
+
+            else if (score === 2) {
+
+                strengthLabel.textContent =
+                    "متوسطة";
+
+            }
+
+            else if (score === 3) {
+
+                strengthLabel.textContent =
+                    "جيدة";
+
+            }
+
+            else {
+
+                strengthLabel.textContent =
+                    "قوية";
+
+            }
+
+
 
             strengthLabel.style.color =
-                score <= 1 ? "var(--red)" :
-                score === 2 ? "var(--orange)" :
-                score === 3 ? "var(--gold)" : "var(--green)";
 
-            return { rules, score, allValid: score === 4 };
+                score <= 1
+                    ? "var(--red)"
+
+                    : score === 2
+                        ? "var(--orange)"
+
+                        : score === 3
+                            ? "var(--gold)"
+
+                            : "var(--green)";
+
+
+
+            return {
+
+                rules,
+
+                score,
+
+                allValid:
+                    score === 4
+
+            };
 
         }
 
-        passwordInput.addEventListener("input", () => {
-            evaluatePassword(passwordInput.value);
-        });
 
-        // تهيئة الحالة الابتدائية
+
+        passwordInput.addEventListener(
+            "input",
+            () => {
+
+                evaluatePassword(
+                    passwordInput.value
+                );
+
+            }
+        );
+
+
         evaluatePassword("");
 
 
+
         /* =================================================
-           FIELD ERROR HELPERS
+           FIELD ERROR
         ================================================= */
 
-        function setInputError(input, errorEl, hasError) {
+        function setInputError(
+            input,
+            errorEl,
+            hasError
+        ) {
+
 
             if (hasError) {
-                input.style.borderColor = "var(--red)";
+
+
+                input.style.borderColor =
+                    "var(--red)";
+
+
                 errorEl.classList.add("show");
+
+
             } else {
-                input.style.borderColor = "var(--border)";
+
+
+                input.style.borderColor =
+                    "#e5e9f0";
+
+
                 errorEl.classList.remove("show");
+
+
             }
 
+
         }
+
 
 
         /* =================================================
            SUBMIT
         ================================================= */
 
-        submitBtn.addEventListener("click", async () => {
+        submitBtn.addEventListener(
+            "click",
+            async () => {
 
-            const username = usernameInput.value.trim();
-            const password = passwordInput.value;
 
-            let hasError = false;
+                const username =
+                    usernameInput.value.trim();
 
-            // اسم المستخدم
-            if (!username) {
-                setInputError(usernameInput, usernameError, true);
-                hasError = true;
-            } else {
-                setInputError(usernameInput, usernameError, false);
-            }
 
-            // قوة كلمة المرور
-            const { allValid } = evaluatePassword(password);
+                const password =
+                    passwordInput.value;
 
-            if (!allValid) {
-                showToast("كلمة المرور لا تحقق كل الشروط المطلوبة", "error");
-                hasError = true;
-            }
 
-            if (hasError) return;
+                let hasError = false;
 
-            // تفعيل حالة التحميل
-            submitBtn.disabled = true;
-            submitBtn.classList.add("loading");
 
-            const usernameKey = username.toLowerCase();
 
-            try {
+                /* USERNAME */
 
-                const userRef = db.collection(USERS_COLLECTION).doc(usernameKey);
-                const existing = await userRef.get();
+                if (!username) {
 
-                if (existing.exists) {
-                    showToast("اسم المستخدم موجود بالفعل، برجاء اختيار اسم آخر", "error");
-                    setInputError(usernameInput, usernameError, true);
-                    usernameError.textContent = "اسم المستخدم مستخدم من قبل";
-                    return;
+
+                    setInputError(
+                        usernameInput,
+                        usernameError,
+                        true
+                    );
+
+
+                    hasError = true;
+
+
+                } else {
+
+
+                    setInputError(
+                        usernameInput,
+                        usernameError,
+                        false
+                    );
+
+
                 }
 
-                await userRef.set({
-                    username: usernameKey,
-                    displayUsername: username,
-                    password: password,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    isActive: true
-                });
 
-                // حفظ المستخدم الحالي محلياً لاستخدامه في باقي الصفحات
-                localStorage.setItem("currentUser", usernameKey);
-                localStorage.setItem("current_servant_username", usernameKey);
 
-                showToast("تم تفعيل الحساب بنجاح", "success");
+                /* PASSWORD */
 
-                setTimeout(() => {
-                    window.location.href = "sign_comp.html";
-                }, 900);
+                const {
+                    allValid
+                } =
+                    evaluatePassword(password);
 
-            } catch (error) {
 
-                console.error("SIGNUP ERROR:", error);
-                showToast("حدث خطأ أثناء إنشاء الحساب، حاول مرة أخرى", "error");
 
-            } finally {
+                if (!allValid) {
 
-                submitBtn.disabled = false;
-                submitBtn.classList.remove("loading");
+
+                    showToast(
+                        "كلمة المرور لا تحقق كل الشروط المطلوبة",
+                        "error"
+                    );
+
+
+                    hasError = true;
+
+
+                }
+
+
+
+                if (hasError)
+                    return;
+
+
+
+                /* LOADING */
+
+                submitBtn.disabled = true;
+
+                submitBtn.classList.add("loading");
+
+
+
+                const usernameKey =
+                    username.toLowerCase();
+
+
+
+                try {
+
+
+                    const userRef =
+                        db
+                            .collection(USERS_COLLECTION)
+                            .doc(usernameKey);
+
+
+                    const existing =
+                        await userRef.get();
+
+
+
+                    if (existing.exists) {
+
+
+                        showToast(
+                            "اسم المستخدم موجود بالفعل، برجاء اختيار اسم آخر",
+                            "error"
+                        );
+
+
+                        usernameError.textContent =
+                            "اسم المستخدم مستخدم من قبل";
+
+
+                        setInputError(
+                            usernameInput,
+                            usernameError,
+                            true
+                        );
+
+
+                        return;
+
+                    }
+
+
+
+                    await userRef.set({
+
+                        username:
+                            usernameKey,
+
+                        displayUsername:
+                            username,
+
+                        password:
+                            password,
+
+                        createdAt:
+                            firebase.firestore
+                                .FieldValue
+                                .serverTimestamp(),
+
+                        isActive:
+                            true
+
+                    });
+
+
+
+                    /* LOCAL STORAGE */
+
+                    localStorage.setItem(
+                        "currentUser",
+                        usernameKey
+                    );
+
+
+                    localStorage.setItem(
+                        "current_servant_username",
+                        usernameKey
+                    );
+
+
+
+                    showToast(
+                        "تم تفعيل الحساب بنجاح",
+                        "success"
+                    );
+
+
+
+                    setTimeout(() => {
+
+                        window.location.href =
+                            "sign_comp.html";
+
+                    }, 900);
+
+
+
+                } catch (error) {
+
+
+                    console.error(
+                        "SIGNUP ERROR:",
+                        error
+                    );
+
+
+                    showToast(
+                        "حدث خطأ أثناء إنشاء الحساب، حاول مرة أخرى",
+                        "error"
+                    );
+
+
+                } finally {
+
+
+                    submitBtn.disabled = false;
+
+                    submitBtn.classList.remove(
+                        "loading"
+                    );
+
+
+                }
+
 
             }
+        );
 
-        });
 
 
         /* =================================================
            LIVE VALIDATION
         ================================================= */
 
-        usernameInput.addEventListener("input", () => {
-            setInputError(usernameInput, usernameError, false);
-            usernameError.textContent = "هذا الحقل مطلوب";
-        });
+        usernameInput.addEventListener(
+            "input",
+            () => {
+
+
+                setInputError(
+                    usernameInput,
+                    usernameError,
+                    false
+                );
+
+
+                usernameError.textContent =
+                    "هذا الحقل مطلوب";
+
+
+            }
+        );
+
 
     </script>
+
 
 </body>
 
