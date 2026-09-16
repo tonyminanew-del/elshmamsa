@@ -1,353 +1,1485 @@
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <title>مدرسة شمامسة مارجرجس بالمنصورة</title>
-    <!-- استدعاء خطوط عربية فخمة من Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-    <!-- مكتبة الأيقونات FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
+
+    <!-- ================= FONTS ================= -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+
+    <!-- ================= ICONS ================= -->
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
     <style>
+
+        /* =====================================================
+           ROOT
+        ===================================================== */
+
         :root {
-            --bg-deep: #0a0e17;
-            --bg-gradient: radial-gradient(circle at 50% 10%, #1e2538 0%, #0d121c 60%, #07090f 100%);
-            --primary-gold: #c5a059;
-            --gold-light: #dfbc77;
-            --gold-dark: #967433;
-            --card-bg: #ffffff;
-            --text-main: #111827;
-            --text-muted: #6b7280;
-            --card-radius: 36px;
+
+            --navy: #172554;
+            --navy-light: #28418f;
+
+            --maroon: #741b24;
+            --maroon-light: #9b3039;
+
+            --gold: #c79a32;
+            --gold-light: #f2d889;
+
+            --bg: #f5f7fb;
+
+            --white: #ffffff;
+
+            --text: #182033;
+
+            --muted: #858c9b;
+
+            --border: #e9edf3;
+
+            --shadow:
+                0 20px 55px rgba(23, 37, 84, .13);
+
         }
+
+
+        /* =====================================================
+           RESET
+        ===================================================== */
 
         * {
-            box-sizing: border-box;
+
             margin: 0;
             padding: 0;
-            font-family: 'Cairo', sans-serif;
+
+            box-sizing: border-box;
+
             -webkit-tap-highlight-color: transparent;
+
         }
+
+
+        html,
+        body {
+
+            width: 100%;
+            min-height: 100%;
+
+        }
+
 
         body {
-            background-color: var(--bg-deep);
-            background-image: var(--bg-gradient);
-            color: #ffffff;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+
+            font-family: "Tajawal", sans-serif;
+
+            color: var(--text);
+
+            background: var(--bg);
+
             overflow-x: hidden;
-            position: relative;
-            padding: 20px;
+
         }
 
-        /* خلفية ضوئية ناعمة وخاصة بالكارت */
-        .ambient-glow {
-            position: absolute;
-            width: 380px;
-            height: 550px;
-            background: radial-gradient(circle, rgba(197, 160, 89, 0.15) 0%, rgba(13, 18, 28, 0) 70%);
-            filter: blur(50px);
-            z-index: 1;
-            pointer-events: none;
-        }
 
-        /* حاوية التطبيق المتوافقة مع الموبايل والديسكفري */
-        .app-wrapper {
-            width: 100%;
-            max-width: 440px;
-            z-index: 10;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            animation: fadeInScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
+        a {
 
-        @keyframes fadeInScale {
-            from { opacity: 0; transform: translateY(20px) scale(0.96); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        /* الكارت الرئيسي الأبيض الفخم (Card) */
-        .main-card {
-            width: 100%;
-            background: var(--card-bg);
-            border-radius: var(--card-radius);
-            padding: 32px 24px 28px 24px;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5),
-                        0 0 40px rgba(197, 160, 89, 0.12);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            position: relative;
-        }
-
-        /* Drag Handle العلوي */
-        .drag-handle {
-            width: 40px;
-            height: 5px;
-            background-color: #e5e7eb;
-            border-radius: 10px;
-            margin-bottom: 22px;
-        }
-
-        /* الشعار الثلاثي الأبعاد */
-        .logo-container {
-            position: relative;
-            width: 78px;
-            height: 78px;
-            background: linear-gradient(135deg, #fcf8f2 0%, #f3ebd8 100%);
-            border: 1px solid rgba(197, 160, 89, 0.3);
-            border-radius: 24px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 22px;
-            box-shadow: 0 10px 25px rgba(197, 160, 89, 0.25),
-                        inset 0 2px 3px rgba(255, 255, 255, 0.8),
-                        inset 0 -2px 3px rgba(197, 160, 89, 0.2);
-            animation: floatLogo 4s ease-in-out infinite;
-        }
-
-        .logo-container i {
-            font-size: 32px;
-            color: var(--primary-gold);
-            filter: drop-shadow(0 2px 5px rgba(197, 160, 89, 0.4));
-        }
-
-        @keyframes floatLogo {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-
-        /* العناوين والوصف */
-        .title-section {
-            margin-bottom: 28px;
-            width: 100%;
-        }
-
-        .main-heading {
-            font-size: 19px;
-            font-weight: 800;
-            color: var(--text-main);
-            line-height: 1.45;
-            margin-bottom: 8px;
-        }
-
-        .church-name {
-            display: block;
-            font-family: 'Amiri', serif;
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--primary-gold);
-            margin-top: 4px;
-            letter-spacing: 0.2px;
-        }
-
-        .sub-description {
-            font-size: 13px;
-            font-weight: 400;
-            color: var(--text-muted);
-            line-height: 1.6;
-            max-width: 310px;
-            margin: 0 auto;
-        }
-
-        /* أزرار الاختيار (Actions Grid/List) */
-        .actions-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            margin-bottom: 24px;
-        }
-
-        .action-btn {
-            position: relative;
-            width: 100%;
-            height: 72px;
-            background: linear-gradient(135deg, #161e2d 0%, #0d121c 100%);
-            border: none;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            cursor: pointer;
             text-decoration: none;
-            box-shadow: 0 10px 25px rgba(13, 18, 28, 0.3),
-                        inset 0 1px 1px rgba(255, 255, 255, 0.15);
-            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-            overflow: hidden;
+
+            color: inherit;
+
         }
 
-        .action-btn::before {
-            content: '';
-            position: absolute;
+
+        /* =====================================================
+           BACKGROUND
+        ===================================================== */
+
+        .page-background {
+
+            position: fixed;
+
             inset: 0;
-            background: linear-gradient(135deg, var(--primary-gold) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
+
+            z-index: 0;
+
+            pointer-events: none;
+
+            overflow: hidden;
+
+            background:
+
+                radial-gradient(
+                    circle at 90% 0%,
+                    rgba(199, 154, 50, .12),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 0% 45%,
+                    rgba(23, 37, 84, .08),
+                    transparent 32%
+                ),
+
+                #f5f7fb;
+
         }
 
-        .action-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 16px 30px rgba(13, 18, 28, 0.4),
-                        0 0 20px rgba(197, 160, 89, 0.3);
+
+        .page-background::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 550px;
+            height: 550px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(23, 37, 84, .045);
+
+            top: -300px;
+            right: -220px;
+
         }
 
-        .action-btn:hover::before {
-            opacity: 0.15;
+
+        .page-background::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 450px;
+            height: 450px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(116, 27, 36, .045);
+
+            bottom: -250px;
+            left: -180px;
+
         }
 
-        .action-btn:active {
-            transform: translateY(1px);
-            box-shadow: 0 5px 15px rgba(13, 18, 28, 0.3);
-        }
 
-        .btn-icon-wrapper {
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+
             position: relative;
+
             z-index: 2;
-            width: 48px;
-            height: 48px;
-            background: rgba(197, 160, 89, 0.15);
-            border: 1px solid rgba(197, 160, 89, 0.3);
-            border-radius: 14px;
+
+            min-height: 100vh;
+            min-height: 100svh;
+
             display: flex;
-            justify-content: center;
+
             align-items: center;
-            margin-left: 16px;
-            font-size: 20px;
-            color: var(--gold-light);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
+
+            justify-content: center;
+
+            padding: 35px 20px;
+
         }
 
-        .action-btn:hover .btn-icon-wrapper {
-            background: var(--primary-gold);
-            color: #0d121c;
-            border-color: var(--primary-gold);
-        }
 
-        .btn-text-content {
+        .hero-container {
+
+            width: min(
+                1180px,
+                calc(100% - 10px)
+            );
+
+            min-height: 690px;
+
             position: relative;
-            z-index: 2;
+
+            overflow: hidden;
+
+            border-radius: 42px;
+
+            color: white;
+
+            background:
+
+                radial-gradient(
+                    circle at 8% 12%,
+                    rgba(255,255,255,.17),
+                    transparent 24%
+                ),
+
+                radial-gradient(
+                    circle at 93% 90%,
+                    rgba(199,154,50,.30),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(40,65,143,.35),
+                    transparent 40%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #101a3d 0%,
+                    #172554 35%,
+                    #28418f 58%,
+                    #741b24 100%
+                );
+
+            box-shadow:
+
+                0 30px 80px
+                rgba(23,37,84,.25);
+
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            flex-grow: 1;
-            text-align: right;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 70px 50px;
+
+            animation: heroIn .8s ease both;
+
         }
 
-        .btn-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 2px;
+
+        /* =====================================================
+           HERO DECORATIONS
+        ===================================================== */
+
+        .hero-container::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 520px;
+            height: 520px;
+
+            border-radius: 50%;
+
+            border: 1px solid
+                rgba(255,255,255,.08);
+
+            left: -260px;
+            bottom: -270px;
+
         }
 
-        .btn-subtitle {
-            font-size: 11.5px;
-            font-weight: 300;
-            color: rgba(255, 255, 255, 0.6);
+
+        .hero-container::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 650px;
+            height: 650px;
+
+            border-radius: 50%;
+
+            border: 1px solid
+                rgba(255,255,255,.055);
+
+            right: -330px;
+            top: -360px;
+
         }
 
-        .btn-arrow-icon {
+
+        .circle-small {
+
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            border-radius: 50%;
+
+            border: 1px solid
+                rgba(242,216,137,.14);
+
+            right: 15%;
+
+            bottom: -115px;
+
+        }
+
+
+        /* =====================================================
+           HERO CONTENT
+        ===================================================== */
+
+        .hero-content {
+
             position: relative;
-            z-index: 2;
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 14px;
-            transition: transform 0.3s ease;
-        }
 
-        .action-btn:hover .btn-arrow-icon {
-            color: var(--primary-gold);
-            transform: translateX(-4px);
-        }
+            z-index: 5;
 
-        /* أسفل الكارت (Footer) */
-        .card-footer-info {
-            border-top: 1px solid #f3f4f6;
-            padding-top: 16px;
             width: 100%;
+
+            max-width: 1000px;
+
+            text-align: center;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
         }
 
-        .footer-church {
-            font-size: 11.5px;
-            font-weight: 600;
-            color: var(--text-muted);
-            letter-spacing: 0.2px;
+
+        /* =====================================================
+           TOP LABEL
+        ===================================================== */
+
+        .hero-label {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            padding: 9px 19px;
+
+            border-radius: 100px;
+
+            background:
+                rgba(255,255,255,.10);
+
+            border:
+                1px solid
+                rgba(255,255,255,.25);
+
+            backdrop-filter: blur(15px);
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                inset 0 1px
+                rgba(255,255,255,.08);
+
+            animation:
+                fadeDown .7s ease .1s both;
+
         }
+
+
+        .hero-label i {
+
+            color: var(--gold-light);
+
+        }
+
+
+        /* =====================================================
+           ICON
+        ===================================================== */
+
+        .hero-icon {
+
+            width: 88px;
+            height: 88px;
+
+            border-radius: 28px;
+
+            display: grid;
+
+            place-items: center;
+
+            background:
+                rgba(255,255,255,.11);
+
+            border:
+                2px solid
+                rgba(255,255,255,.38);
+
+            box-shadow:
+
+                0 18px 45px
+                rgba(0,0,0,.18),
+
+                inset 0 1px
+                rgba(255,255,255,.16);
+
+            margin-bottom: 25px;
+
+            animation:
+                iconIn .8s ease .15s both;
+
+        }
+
+
+        .hero-icon i {
+
+            font-size: 38px;
+
+            color: var(--gold-light);
+
+            filter:
+                drop-shadow(
+                    0 5px 8px
+                    rgba(0,0,0,.35)
+                );
+
+        }
+
+
+        /* =====================================================
+           TITLE
+        ===================================================== */
+
+        .hero-title {
+
+            font-family: "Tajawal", sans-serif;
+
+            font-size:
+                clamp(30px, 5vw, 56px);
+
+            line-height: 1.35;
+
+            font-weight: 900;
+
+            color: white;
+
+            text-shadow:
+                0 5px 20px
+                rgba(0,0,0,.18);
+
+            animation:
+                fadeUp .8s ease .2s both;
+
+        }
+
+
+        .hero-title span {
+
+            display: block;
+
+            font-family: "Amiri", serif;
+
+            font-size:
+                clamp(27px, 4.5vw, 48px);
+
+            line-height: 1.5;
+
+            margin-top: 7px;
+
+            background:
+
+                linear-gradient(
+                    180deg,
+                    #fff7d5,
+                    #f2d889 55%,
+                    #c79a32
+                );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+            filter:
+                drop-shadow(
+                    0 4px 8px
+                    rgba(0,0,0,.2)
+                );
+
+        }
+
+
+        /* =====================================================
+           DESCRIPTION
+        ===================================================== */
+
+        .hero-description {
+
+            max-width: 650px;
+
+            margin-top: 18px;
+
+            color:
+                rgba(255,255,255,.76);
+
+            font-size:
+                clamp(13px, 2vw, 16px);
+
+            line-height: 1.9;
+
+            animation:
+                fadeUp .8s ease .3s both;
+
+        }
+
+
+        /* =====================================================
+           DIVIDER
+        ===================================================== */
+
+        .hero-divider {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-top: 27px;
+
+            margin-bottom: 28px;
+
+            opacity: .65;
+
+        }
+
+
+        .hero-divider span {
+
+            width: 55px;
+
+            height: 1px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--gold-light)
+                );
+
+        }
+
+
+        .hero-divider span:last-child {
+
+            background:
+                linear-gradient(
+                    270deg,
+                    transparent,
+                    var(--gold-light)
+                );
+
+        }
+
+
+        .hero-divider i {
+
+            font-size: 9px;
+
+            color: var(--gold-light);
+
+        }
+
+
+        /* =====================================================
+           ACTIONS
+        ===================================================== */
+
+        .hero-actions {
+
+            width: 100%;
+
+            max-width: 850px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 18px;
+
+            animation:
+                fadeUp .8s ease .4s both;
+
+        }
+
+
+        /* =====================================================
+           BUTTON
+        ===================================================== */
+
+        .hero-button {
+
+            min-height: 105px;
+
+            position: relative;
+
+            display: flex;
+
+            align-items: center;
+
+            padding: 18px 20px;
+
+            border-radius: 25px;
+
+            background:
+                rgba(255,255,255,.105);
+
+            border:
+                1px solid
+                rgba(255,255,255,.22);
+
+            backdrop-filter:
+                blur(18px);
+
+            box-shadow:
+
+                0 15px 35px
+                rgba(0,0,0,.16),
+
+                inset 0 1px
+                rgba(255,255,255,.12);
+
+            overflow: hidden;
+
+            transition:
+                .35s cubic-bezier(
+                    .2,.8,.2,1
+                );
+
+        }
+
+
+        .hero-button::before {
+
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+
+                radial-gradient(
+                    circle at 0% 50%,
+                    rgba(242,216,137,.24),
+                    transparent 55%
+                );
+
+            opacity: 0;
+
+            transition: .35s;
+
+        }
+
+
+        .hero-button:hover {
+
+            transform:
+                translateY(-7px);
+
+            border-color:
+                rgba(242,216,137,.60);
+
+            box-shadow:
+
+                0 25px 50px
+                rgba(0,0,0,.24),
+
+                0 0 30px
+                rgba(242,216,137,.10);
+
+        }
+
+
+        .hero-button:hover::before {
+
+            opacity: 1;
+
+        }
+
+
+        /* =====================================================
+           BUTTON ICON
+        ===================================================== */
+
+        .button-icon {
+
+            position: relative;
+
+            z-index: 2;
+
+            width: 65px;
+            height: 65px;
+
+            flex-shrink: 0;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 21px;
+
+            background:
+                rgba(255,255,255,.11);
+
+            border:
+                1px solid
+                rgba(242,216,137,.45);
+
+            margin-left: 17px;
+
+            transition: .35s;
+
+        }
+
+
+        .button-icon i {
+
+            color:
+                var(--gold-light);
+
+            font-size: 26px;
+
+            transition: .35s;
+
+        }
+
+
+        .hero-button:hover
+        .button-icon {
+
+            background:
+                var(--gold-light);
+
+            border-color:
+                var(--gold-light);
+
+            transform:
+                scale(1.06);
+
+        }
+
+
+        .hero-button:hover
+        .button-icon i {
+
+            color:
+                var(--navy);
+
+        }
+
+
+        /* =====================================================
+           BUTTON TEXT
+        ===================================================== */
+
+        .button-content {
+
+            position: relative;
+
+            z-index: 2;
+
+            flex: 1;
+
+            text-align: right;
+
+        }
+
+
+        .button-title {
+
+            display: block;
+
+            font-size: 19px;
+
+            font-weight: 800;
+
+            margin-bottom: 4px;
+
+        }
+
+
+        .button-subtitle {
+
+            display: block;
+
+            color:
+                rgba(255,255,255,.67);
+
+            font-size: 11.5px;
+
+            line-height: 1.7;
+
+        }
+
+
+        .button-arrow {
+
+            position: relative;
+
+            z-index: 2;
+
+            color:
+                rgba(255,255,255,.45);
+
+            font-size: 13px;
+
+            margin-right: 8px;
+
+            transition: .35s;
+
+        }
+
+
+        .hero-button:hover
+        .button-arrow {
+
+            color:
+                var(--gold-light);
+
+            transform:
+                translateX(-5px);
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .hero-footer {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-top: 29px;
+
+            color:
+                rgba(255,255,255,.62);
+
+            font-family: "Amiri", serif;
+
+            font-size: 15px;
+
+            animation:
+                fadeUp .8s ease .5s both;
+
+        }
+
+
+        .hero-footer i {
+
+            color:
+                var(--gold-light);
+
+            font-size: 12px;
+
+        }
+
+
+        /* =====================================================
+           ANIMATIONS
+        ===================================================== */
+
+        @keyframes heroIn {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(25px)
+                    scale(.98);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+
+            }
+
+        }
+
+
+        @keyframes fadeDown {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(-18px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+
+            }
+
+        }
+
+
+        @keyframes fadeUp {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(25px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+
+            }
+
+        }
+
+
+        @keyframes iconIn {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    scale(.65)
+                    rotate(-8deg);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    scale(1)
+                    rotate(0);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           TABLET
+        ===================================================== */
+
+        @media (max-width: 850px) {
+
+            .hero-container {
+
+                min-height: auto;
+
+                padding:
+                    60px 30px;
+
+                border-radius: 35px;
+
+            }
+
+            .hero-actions {
+
+                max-width: 720px;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 650px) {
+
+            .hero {
+
+                padding:
+                    14px;
+
+                align-items:
+                    stretch;
+
+            }
+
+
+            .hero-container {
+
+                min-height:
+                    calc(100svh - 28px);
+
+                padding:
+                    45px 18px 35px;
+
+                border-radius: 30px;
+
+            }
+
+
+            .hero-label {
+
+                font-size: 10.5px;
+
+                padding:
+                    8px 14px;
+
+                margin-bottom: 19px;
+
+            }
+
+
+            .hero-icon {
+
+                width: 74px;
+                height: 74px;
+
+                border-radius: 24px;
+
+                margin-bottom: 20px;
+
+            }
+
+
+            .hero-icon i {
+
+                font-size: 32px;
+
+            }
+
+
+            .hero-title {
+
+                font-size: 28px;
+
+                line-height: 1.4;
+
+            }
+
+
+            .hero-title span {
+
+                font-size: 25px;
+
+                line-height: 1.5;
+
+                margin-top: 4px;
+
+            }
+
+
+            .hero-description {
+
+                font-size: 12px;
+
+                line-height: 1.85;
+
+                padding:
+                    0 7px;
+
+                margin-top: 13px;
+
+            }
+
+
+            .hero-divider {
+
+                margin-top: 20px;
+
+                margin-bottom: 21px;
+
+            }
+
+
+            .hero-actions {
+
+                grid-template-columns:
+                    1fr;
+
+                gap: 12px;
+
+            }
+
+
+            .hero-button {
+
+                min-height: 88px;
+
+                border-radius: 21px;
+
+                padding:
+                    13px 14px;
+
+            }
+
+
+            .button-icon {
+
+                width: 54px;
+                height: 54px;
+
+                border-radius: 18px;
+
+                margin-left: 13px;
+
+            }
+
+
+            .button-icon i {
+
+                font-size: 22px;
+
+            }
+
+
+            .button-title {
+
+                font-size: 16px;
+
+            }
+
+
+            .button-subtitle {
+
+                font-size: 10px;
+
+            }
+
+
+            .button-arrow {
+
+                font-size: 11px;
+
+                margin-right: 5px;
+
+            }
+
+
+            .hero-footer {
+
+                margin-top: 22px;
+
+                font-size: 12px;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           VERY SMALL PHONES
+        ===================================================== */
+
+        @media (max-width: 380px) {
+
+            .hero-container {
+
+                padding:
+                    32px 14px 25px;
+
+            }
+
+
+            .hero-icon {
+
+                width: 65px;
+                height: 65px;
+
+                border-radius: 21px;
+
+            }
+
+
+            .hero-icon i {
+
+                font-size: 28px;
+
+            }
+
+
+            .hero-title {
+
+                font-size: 24px;
+
+            }
+
+
+            .hero-title span {
+
+                font-size: 22px;
+
+            }
+
+
+            .hero-description {
+
+                font-size: 11px;
+
+            }
+
+
+            .hero-button {
+
+                min-height: 80px;
+
+            }
+
+
+            .button-icon {
+
+                width: 49px;
+                height: 49px;
+
+            }
+
+
+            .button-title {
+
+                font-size: 15px;
+
+            }
+
+
+            .button-subtitle {
+
+                font-size: 9px;
+
+            }
+
+
+            .hero-footer {
+
+                font-size: 10px;
+
+            }
+
+        }
+
     </style>
+
 </head>
+
+
 <body>
 
-    <!-- تأثير الإضاءة المحيطة الخلفية -->
-    <div class="ambient-glow"></div>
 
-    <div class="app-wrapper">
-        <!-- الكارت الرئيسي الأبيض الفخم -->
-        <div class="main-card">
-            
-            <!-- مؤشر السحب العلوي -->
-            <div class="drag-handle"></div>
+    <!-- ================= BACKGROUND ================= -->
 
-            <!-- الشعار الثلاثي الأبعاد -->
-            <div class="logo-container">
-                <i class="fa-solid fa-cross"></i>
-            </div>
+    <div class="page-background"></div>
 
-            <!-- العنوان والوصف -->
-            <div class="title-section">
-                <h1 class="main-heading">
+
+    <!-- ================= HERO ================= -->
+
+    <main class="hero">
+
+
+        <section class="hero-container">
+
+
+            <div class="circle-small"></div>
+
+
+            <div class="hero-content">
+
+
+                <!-- TOP LABEL -->
+
+                <div class="hero-label">
+
+                    <i class="fa-solid fa-cross"></i>
+
+                    خدمة مدرسة الشمامسة
+
+                </div>
+
+
+                <!-- ICON -->
+
+                <div class="hero-icon">
+
+                    <i class="fa-solid fa-church"></i>
+
+                </div>
+
+
+                <!-- TITLE -->
+
+                <h1 class="hero-title">
+
                     أهلاً بكم في خدمة مدرسة شمامسة
-                    <span class="church-name">كنيسة الشهيد العظيم مارجرجس بالمنصورة</span>
+
+                    <span>
+                        كنيسة الشهيد العظيم مارجرجس بالمنصورة
+                    </span>
+
                 </h1>
-                <p class="sub-description">
+
+
+                <!-- DESCRIPTION -->
+
+                <p class="hero-description">
+
                     بوابتك لخدمة مدرسة الشمامسة ومتابعة كل ما يخص الخدمة
+                    من فصول وحضور ومخدومين ودروس وألحان في مكان واحد.
+
                 </p>
+
+
+                <!-- DIVIDER -->
+
+                <div class="hero-divider">
+
+                    <span></span>
+
+                    <i class="fa-solid fa-star"></i>
+
+                    <span></span>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="hero-actions">
+
+
+                    <!-- ================= خادم ================= -->
+
+                    <a href="a/sign.html"
+                        class="hero-button">
+
+
+                        <div class="button-icon">
+
+                            <i class="fa-solid fa-user-tie"></i>
+
+                        </div>
+
+
+                        <div class="button-content">
+
+                            <span class="button-title">
+                                دخول خادم
+                            </span>
+
+                            <span class="button-subtitle">
+                                إدارة الفصول، الحضور، ومتابعة المخدومين
+                            </span>
+
+                        </div>
+
+
+                        <div class="button-arrow">
+
+                            <i class="fa-solid fa-chevron-left"></i>
+
+                        </div>
+
+
+                    </a>
+
+
+                    <!-- ================= مخدوم ================= -->
+
+                    <a href="u/sign.html"
+                        class="hero-button">
+
+
+                        <div class="button-icon">
+
+                            <i class="fa-solid fa-child-reaching"></i>
+
+                        </div>
+
+
+                        <div class="button-content">
+
+                            <span class="button-title">
+                                دخول مخدوم
+                            </span>
+
+                            <span class="button-subtitle">
+                                الدروس، الألحان، النقاط، والمتابعة
+                            </span>
+
+                        </div>
+
+
+                        <div class="button-arrow">
+
+                            <i class="fa-solid fa-chevron-left"></i>
+
+                        </div>
+
+
+                    </a>
+
+
+                </div>
+
+
+                <!-- FOOTER -->
+
+                <div class="hero-footer">
+
+                    <i class="fa-solid fa-church"></i>
+
+                    كنيسة الشهيد العظيم مارجرجس بالمنصورة
+
+                </div>
+
+
             </div>
 
-            <!-- أزرار الاختيار الرئيسية -->
-            <div class="actions-container">
-                <!-- زر دخول خادم -->
-                <a href="a/sign.html" class="action-btn">
-                    <div class="btn-icon-wrapper">
-                        <i class="fa-solid fa-user-tie"></i>
-                    </div>
-                    <div class="btn-text-content">
-                        <span class="btn-title">دخول خادم</span>
-                        <span class="btn-subtitle">إدارة الفصول، الحضور، ومتابعة المخدومين</span>
-                    </div>
-                    <div class="btn-arrow-icon">
-                        <i class="fa-solid fa-chevron-left"></i>
-                    </div>
-                </a>
+        </section>
 
-                <!-- زر دخول مخدوم -->
-                <a href="u/sign.html" class="action-btn">
-                    <div class="btn-icon-wrapper">
-                        <i class="fa-solid fa-child-reaching"></i>
-                    </div>
-                    <div class="btn-text-content">
-                        <span class="btn-title">دخول مخدوم</span>
-                        <span class="btn-subtitle">الدروس، الألحان، النقاط، والمتابعة</span>
-                    </div>
-                    <div class="btn-arrow-icon">
-                        <i class="fa-solid fa-chevron-left"></i>
-                    </div>
-                </a>
-            </div>
 
-            <!-- تذييل الكارت الهادئ -->
-            <div class="card-footer-info">
-                <span class="footer-church">كنيسة الشهيد العظيم مارجرجس بالمنصورة</span>
-            </div>
+    </main>
 
-        </div>
-    </div>
 
 </body>
+
 </html>
+```
